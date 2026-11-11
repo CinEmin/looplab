@@ -1,6 +1,6 @@
 # LoopLab distribution draft
 
-Status: listing and upload package prepared, not submitted. Budget: $0. No paid promotion, no purchases, no outreach sent.
+Status: itch.io draft saved, not public. Project 5343254, https://cinemin.itch.io/looplab . ZIP upload rejected because account email is not verified. Verification email requested; owner must complete it. Cover prepared at assets/itch-cover.png; upload after verification. No file currently embedded. Draft has HTML, no payments, active development, 960×850 iframe, scrolling/fullscreen enabled, AI Code/Text disclosure. After verification upload ZIP and cover, mark ZIP playable, test iframe and then publish. Budget: $0. No paid promotion, no purchases, no outreach sent.
 
 ## First channel
 
