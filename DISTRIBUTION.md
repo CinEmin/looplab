@@ -1,6 +1,8 @@
 # LoopLab distribution draft
 
-Status: itch.io draft saved, not public. Project 5343254, https://cinemin.itch.io/looplab . ZIP upload rejected because account email is not verified. Verification email requested; owner must complete it. Cover prepared at assets/itch-cover.png; upload after verification. No file currently embedded. Draft has HTML, no payments, active development, 960×850 iframe, scrolling/fullscreen enabled, AI Code/Text disclosure. After verification upload ZIP and cover, mark ZIP playable, test iframe and then publish. Budget: $0. No paid promotion, no purchases, no outreach sent.
+Status: PUBLIC on 12 November 2026 (Europe/Istanbul): https://cinemin.itch.io/looplab . Project 5343254. Email verified, ZIP and cover uploaded, browser-play enabled. No payments or donations, no spending. Public badge verified. Embedded Chromium QA: Odd scored 10, Number Dash keyboard Enter scored 4, Memory Flash scored 12. Optional analytics declined during QA. Canonical share fallback was visible when iframe clipboard access was unavailable. Console inspection showed extension metadata errors, not game errors. Physical mobile remains untested.
+
+Next: improve listing tags/screenshots, verify itch-channel ingestion with a separately excluded controlled test, inspect real acquisition after an observation window. Do not treat owner/QA plays as acquisition. Minor follow-up: clear old share-result text when switching modes.
 
 ## First channel
 
