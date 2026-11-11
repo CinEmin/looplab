@@ -8,7 +8,7 @@ Budget: zero. Do not add a payment card or enable paid usage without owner appro
 
 Production: https://looplab-pilot.racing-thyme-8277.chatgpt.site/
 
-Sites project: appgprj_6af4d520ffcc81919825298020c23fa4, public version 4, source commit 53b96937394064d7fee2c5e067abdd3e8b137649. GitHub is the maintained source; Sites hosts the deployed static files. Future releases must synchronize index.html, analytics.js and analytics-config.js into the Site's dist directory and deploy a saved Site version. A GitHub push alone does not update this production site.
+Sites project: appgprj_6af4d520ffcc81919825298020c23fa4, public version 5, source commit e5d9e6d4b7e6b8574360fedf0e40f7d50988f0ec. GitHub is the maintained source; Sites hosts the deployed static files. Future releases must synchronize index.html, analytics.js and analytics-config.js into the Site's dist directory and deploy a saved Site version. A GitHub push alone does not update this production site.
 
 GitHub Pages main/root was attempted four times; GitHub returned internal startup errors before any build jobs ran. Use the working Sites URL, not the unverified GitHub Pages URL.
 
@@ -67,3 +67,7 @@ Exclude these QA IDs from every product analysis (the saved insight already does
 - 8d0e5548-1dd1-41cc-98a0-e244faecceb7 (itch complete lifecycle QA)
 
 Automated suite: 20 passing tests. Four additional failure scenarios each exercise all three games: denied storage access, storage quota exceeded, malformed JSON and rejected analytics network requests. Each checks scoring, timer completion and replay. Network failure uses the real analytics module and a rejected fetch promise; no unhandled rejection occurs. This validates gameplay after assets have loaded, not offline first-load or service-worker support. Physical mobile and browser-level network emulation remain unverified.
+
+## Keyboard and dialog QA — 12 November 2026
+
+Number Dash completed a nine-number sequence with Enter (36 points). Native Tab continued into the next board. The information dialog opened with Enter, closed with Escape and returned focus to its opener. Its missing accessible name was reproduced in the browser accessibility tree, then fixed with aria-labelledby pointing at the existing heading. Both Sites v5 and the updated itch ZIP were verified live: dialog role now has the name “What is LoopLab?”. Twenty automated tests pass. This is targeted Chromium QA, not a full WCAG audit or physical screen-reader certification. Spot the Odd and Memory Flash remain visually dependent games.
