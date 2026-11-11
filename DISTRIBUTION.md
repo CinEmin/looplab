@@ -2,7 +2,7 @@
 
 Status: PUBLIC on 12 November 2026 (Europe/Istanbul): https://cinemin.itch.io/looplab . Project 5343254. Email verified, ZIP and cover uploaded, browser-play enabled. No payments or donations, no spending. Public badge verified. Embedded Chromium QA: Odd scored 10, Number Dash keyboard Enter scored 4, Memory Flash scored 12. Optional analytics declined during QA. Canonical share fallback was visible when iframe clipboard access was unavailable. Console inspection showed extension metadata errors, not game errors. Physical mobile remains untested.
 
-Three gameplay screenshots and casual/high-score/minigames tags are live. Mode switching clears old share-result text. Controlled itch-channel visit, start and completion ingestion was verified on 2026-11-11 at 22:29–22:30 UTC. All QA identities are excluded from the saved activity insight (see OPERATIONS.md). Next: accessibility/mobile validation and genuine acquisition review after an observation window. Owner/QA plays are not acquisition.
+Three gameplay screenshots and casual/high-score/minigames tags are live. Mode switching clears old share-result text. Controlled itch-channel visit, start and completion ingestion was verified on 2026-11-11 at 22:29–22:30 UTC. All QA identities are excluded from the saved activity insight (see OPERATIONS.md). Next: physical touch/mobile validation and genuine acquisition review after an observation window. Responsive layout v6 has 320/390/430px Chromium coverage. Owner/QA plays are not acquisition.
 
 ## First channel
 

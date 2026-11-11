@@ -4,6 +4,7 @@ const events=[];const nodes=new Map();function node(){const classes=new Set();co
 const tabs=['odd','numbers','memory'].map(game=>{const n=node();n.dataset.game=game;return n});
 const doc={getElementById(id){if(!nodes.has(id))nodes.set(id,node());return nodes.get(id)},querySelectorAll(){return tabs},createElement:node};let interval;let timeout;let time=0;
 const ctx={document:doc,localStorage:{getItem:()=>saved,setItem:(k,v)=>{saved=v}},location:{href:'https://example.com/'+search,search,protocol:'http:'},URL,URLSearchParams,Date,Math,performance:{now:()=>time},navigator:{},history:{replaceState(){}},setInterval:fn=>{interval=fn;return 1},clearInterval(){},setTimeout:fn=>{timeout=fn;return 1},clearTimeout(){},window:{makeLoopLabAnalytics:()=>({ready:false,choice:()=>null,track:(name,props)=>events.push({name,props})})}};
+if(faults.mobile!==undefined){ctx.window.matchMedia=()=>({matches:faults.mobile});doc.getElementById('game-panel').scrollIntoView=options=>events.push({name:'scroll_to_game',options});}
 if(faults.storageDenied)Object.defineProperty(ctx,'localStorage',{get(){throw new Error('SecurityError')}});
 if(faults.quotaExceeded)ctx.localStorage.setItem=()=>{throw new Error('QuotaExceededError')};
 if(faults.networkRejected){
@@ -15,6 +16,15 @@ if(faults.networkRejected){
 }
 vm.createContext(ctx);vm.runInContext(fs.readFileSync('index.html','utf8').match(/<script>([\s\S]*?)<\/script>/)[1],ctx);return {events,tabs,advance(ms){time+=ms},reveal(){timeout()},api:ctx.window.__loopLabQA,tick(ms){time+=ms;interval()},nodes};}
 test('incomplete persisted stats do not stop startup',()=>{assert.doesNotThrow(()=>boot('{"version":1}'))});
+test('mobile starts bring the game into view without changing the seed',()=>{
+ const b=boot('{}','?g=numbers&seed=0',{mobile:true});b.api.begin();
+ assert.equal(b.events.filter(e=>e.name==='scroll_to_game').length,1);
+ assert.equal(new URL(b.api.makeLink(false)).searchParams.get('seed'),'0');
+});
+test('desktop starts do not move the page',()=>{
+ const b=boot('{}','',{mobile:false});b.api.begin();
+ assert.equal(b.events.filter(e=>e.name==='scroll_to_game').length,0);
+});
 test('shared seed zero remains zero in challenge links',()=>{const {api}=boot('{}','?g=odd&seed=0');api.begin();assert.equal(new URL(api.makeLink(false)).searchParams.get('seed'),'0')});
 test('elapsed wall time ends a run after a delayed timer callback',()=>{const b=boot();b.api.begin();b.tick(61000);assert.equal(b.api.getState().runState,'finished')});
 test('all three modes start and finish',()=>{for(const mode of ['odd','numbers','memory']){const {api}=boot('{}','?g='+mode);api.begin();assert.equal(api.getState().runState,'active');api.finish();assert.equal(api.getState().runState,'finished')}});

@@ -8,7 +8,7 @@ Budget: zero. Do not add a payment card or enable paid usage without owner appro
 
 Production: https://looplab-pilot.racing-thyme-8277.chatgpt.site/
 
-Sites project: appgprj_6af4d520ffcc81919825298020c23fa4, public version 5, source commit e5d9e6d4b7e6b8574360fedf0e40f7d50988f0ec. GitHub is the maintained source; Sites hosts the deployed static files. Future releases must synchronize index.html, analytics.js and analytics-config.js into the Site's dist directory and deploy a saved Site version. A GitHub push alone does not update this production site.
+Sites project: appgprj_6af4d520ffcc81919825298020c23fa4, public version 6, source commit bf1f8b27a955ebaba4f786d3e2100bee6c5261bf. GitHub is the maintained source; Sites hosts the deployed static files. Future releases must synchronize index.html, analytics.js and analytics-config.js into the Site's dist directory and deploy a saved Site version. A GitHub push alone does not update this production site.
 
 GitHub Pages main/root was attempted four times; GitHub returned internal startup errors before any build jobs ran. Use the working Sites URL, not the unverified GitHub Pages URL.
 
@@ -71,3 +71,9 @@ Automated suite: 20 passing tests. Four additional failure scenarios each exerci
 ## Keyboard and dialog QA — 12 November 2026
 
 Number Dash completed a nine-number sequence with Enter (36 points). Native Tab continued into the next board. The information dialog opened with Enter, closed with Escape and returned focus to its opener. Its missing accessible name was reproduced in the browser accessibility tree, then fixed with aria-labelledby pointing at the existing heading. Both Sites v5 and the updated itch ZIP were verified live: dialog role now has the name “What is LoopLab?”. Twenty automated tests pass. This is targeted Chromium QA, not a full WCAG audit or physical screen-reader certification. Spot the Odd and Memory Flash remain visually dependent games.
+
+## Mobile browser layout — 12 November 2026
+
+Sites v6 adds a compact mobile header, less stage whitespace, wider boards, safe-area padding and 44px minimum height for primary/secondary/utility controls. On viewports up to 650px, starting a run scrolls immediately to the game panel. Desktop scroll position is unchanged. Game rules, daily seeds and analytics behavior are unchanged. Tiles use touch-action:manipulation and disable text selection; zoom remains available.
+
+22 Node tests pass. The new mobile-scroll test failed before the implementation, then passed; shared seed zero still survives. Chromium iframe checks at 320/390/430px: no horizontal overflow, share button 44px high, Number Dash scored 4 and Memory Flash 12 at every width. On the deployed Site, Odd scored 10 at every width. This is responsive mouse/keyboard QA, not touch emulation or real Android/iOS testing. At dense Odd levels the board still has seven columns; not every tile is 44px on a narrow phone. Short/landscape screens can require scrolling. No native app, offline/PWA claim or mobile-device certification.
