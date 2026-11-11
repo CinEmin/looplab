@@ -1,8 +1,8 @@
-# LoopLab distribution draft
+# LoopLab distribution
 
 Status: PUBLIC on 12 November 2026 (Europe/Istanbul): https://cinemin.itch.io/looplab . Project 5343254. Email verified, ZIP and cover uploaded, browser-play enabled. No payments or donations, no spending. Public badge verified. Embedded Chromium QA: Odd scored 10, Number Dash keyboard Enter scored 4, Memory Flash scored 12. Optional analytics declined during QA. Canonical share fallback was visible when iframe clipboard access was unavailable. Console inspection showed extension metadata errors, not game errors. Physical mobile remains untested.
 
-Next: improve listing tags/screenshots, verify itch-channel ingestion with a separately excluded controlled test, inspect real acquisition after an observation window. Do not treat owner/QA plays as acquisition. Minor follow-up: clear old share-result text when switching modes.
+Three gameplay screenshots and casual/high-score/minigames tags are live. Mode switching clears old share-result text. Controlled itch-channel visit, start and completion ingestion was verified on 2026-11-11 at 22:29–22:30 UTC. All QA identities are excluded from the saved activity insight (see OPERATIONS.md). Next: accessibility/mobile validation and genuine acquisition review after an observation window. Owner/QA plays are not acquisition.
 
 ## First channel
 
@@ -12,7 +12,7 @@ itch.io HTML5 listing. Official guides checked 12 November 2026:
 
 Use a free account and HTML project. Owner must complete account authentication and any binding terms if needed. Upload index.html, analytics.js and analytics-config.js at ZIP root. Do not enable payments or donations. Verify iframe behavior before publishing there; shared URLs must use the canonical public game address, not an ephemeral asset-host URL. Do not mark mobile friendly before actual mobile QA.
 
-Build: `python scripts/build-itch.py` produces `build/looplab-itch.zip`. Canonical sharing and iframe viewport QA verified; actual itch-hosted behavior remains to be tested.
+Build: `python scripts/build-itch.py` produces `build/looplab-itch.zip`. Canonical sharing and iframe viewport QA verified; actual itch-hosted scoring, canonical share fallback and telemetry were verified.
 
 ## Listing text
 

@@ -8,7 +8,7 @@ Budget: zero. Do not add a payment card or enable paid usage without owner appro
 
 Production: https://looplab-pilot.racing-thyme-8277.chatgpt.site/
 
-Sites project: appgprj_6af4d520ffcc81919825298020c23fa4, public version 1, source commit 8854434b5297dd5d33accdeafe72d73f9d37bac2. GitHub is the maintained source; Sites hosts the deployed static files. Future releases must synchronize index.html, analytics.js and analytics-config.js into the Site's dist directory and deploy a saved Site version. A GitHub push alone does not update this production site.
+Sites project: appgprj_6af4d520ffcc81919825298020c23fa4, public version 4, source commit 53b96937394064d7fee2c5e067abdd3e8b137649. GitHub is the maintained source; Sites hosts the deployed static files. Future releases must synchronize index.html, analytics.js and analytics-config.js into the Site's dist directory and deploy a saved Site version. A GitHub push alone does not update this production site.
 
 GitHub Pages main/root was attempted four times; GitHub returned internal startup errors before any build jobs ran. Use the working Sites URL, not the unverified GitHub Pages URL.
 
@@ -39,17 +39,31 @@ Before optimization: inspect counts and data quality. Do not treat tiny samples 
 
 ## Known follow-up
 
-Verify background-tab timer fairness and inputs near expiry in a real browser. Confirm links after switching modes. Test keyboard/mobile usability, consent UI, storage unavailable, repeated consent clicks, and network failure. Monitor deployment service before repeated retries; do not change billing to resolve startup errors.
+Verify background-tab timer fairness and inputs near expiry in a real browser. Confirm links after switching modes. Continue accessibility and physical mobile usability checks, consent UI and repeated consent clicks. Simulated storage/network failure coverage is recorded below. Monitor deployment service before repeated retries; do not change billing to resolve startup errors.
 
 ## Follow-up release — 12 November 2026 (Europe/Istanbul)
 
 Added input-time deadline enforcement: delayed timer callbacks cannot allow late scoring. Three regression cases first failed with +10/+4/+6 points and passed after the guard. Full suite: 13 passed. Updated the theme-response wording to reflect consent-based upload and made the share label accurate for practice runs and native sharing.
 
-Distribution candidate: itch.io, whose official HTML5 guide supports an index.html-root ZIP and browser embedding. Listing copy is in DISTRIBUTION.md. No submission, account creation, external outreach or fee has occurred. Mobile touch-device validation and embedded-host sharing are still required before marking the listing mobile friendly. This release does not claim those checks passed.
+itch.io is now public at https://cinemin.itch.io/looplab (project 5343254). Listing copy and current distribution status are in DISTRIBUTION.md. Embedded sharing was verified; physical mobile touch-device validation is still required before marking the listing mobile friendly. No external outreach or fee has occurred.
 
 
 ## Sharing and distribution preparation — 12 November 2026
 
 Release pilot-01.3: canonical public challenge URLs work from embedded hosts; copy feedback is visible before a run ends. Analytics adds only the allowlisted channel site/itch, with unchanged opt-in protections. Full suite: 15 passed. Chromium iframe widths 320/390 had no horizontal document overflow; Number Dash, Memory Flash and Odd scored correctly with mouse/keyboard. This is viewport QA, not physical Android/iOS touch testing. Shared-link clipboard output verified before start.
 
-Build the itch.io upload using `python scripts/build-itch.py`; ZIP contains only the three runtime files, with channel=itch. No payments/donations. Listing is not yet submitted.
+Build the itch.io upload using `python scripts/build-itch.py`; ZIP contains only the three runtime files, with channel=itch. No payments/donations. Listing is public with cover, three gameplay screenshots and tags.
+
+
+## Distribution validation and resilience — 12 November 2026
+
+Sites v4 and the itch ZIP contain the share-result reset fix. The runtime analytics release label remains pilot-01.3; the Sites version is a separate hosting version.
+
+Controlled itch test: visit at 22:29:24.468 UTC, game_start at 22:29:24.727, game_complete at 22:30:24.761 on 2026-11-11. All carried channel=itch. Consent was revoked after completion. Raw SQL can return a cached earlier sample; use a fresh bounded time window when validating newly ingested events.
+
+Exclude these QA IDs from every product analysis (the saved insight already does):
+- ee4c5811-e63f-47bc-b9d8-65ee5b204e82 (original site QA)
+- 73094e3a-520a-480c-aadb-099a1fe18d3a (itch consent/revocation QA)
+- 8d0e5548-1dd1-41cc-98a0-e244faecceb7 (itch complete lifecycle QA)
+
+Automated suite: 20 passing tests. Four additional failure scenarios each exercise all three games: denied storage access, storage quota exceeded, malformed JSON and rejected analytics network requests. Each checks scoring, timer completion and replay. Network failure uses the real analytics module and a rejected fetch promise; no unhandled rejection occurs. This validates gameplay after assets have loaded, not offline first-load or service-worker support. Physical mobile and browser-level network emulation remain unverified.
