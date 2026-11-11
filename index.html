@@ -85,16 +85,35 @@
         <div class="principle-card"><span>01 / DAILY PLAY</span><h3>Same puzzle, same day.</h3><p>Your daily seed is the same worldwide in UTC. Play it again or send it to a friend.</p><span>02 / FAIR BY DESIGN</span><h3>Skill before spending.</h3><p>No loot boxes, no paid advantages, no artificial countdown purchases.</p></div>
       </section>
     </main>
+    <section class="feedback-card" aria-label="Optional analytics"><h2>Help improve LoopLab?</h2><p>Optional usage measurement helps us learn which games people return to. Read “About this prototype” for details. Your choice does not affect play.</p><p id="analytics-status" role="status"></p><div id="analytics-options" class="survey-buttons hidden"><button id="analytics-yes" type="button" class="secondary">Allow optional analytics</button><button id="analytics-no" type="button" class="secondary">Decline / stop analytics</button></div></section>
     <footer><span>LoopLab is a free experiment. © 2026.</span><div><button id="export-metrics" class="text-link" type="button">Export my local activity</button><button id="delete-metrics" class="text-link" type="button">Delete local activity</button></div></footer>
   </div>
-  <dialog id="info-dialog"><div class="dialog-body"><button type="button" class="dialog-close" id="close-info" aria-label="Close">×</button><span class="micro-label">OPEN PROTOTYPE / PILOT 01</span><h2>What is LoopLab?</h2><p>A small independent set of three playable browser challenges, made to measure whether people enjoy returning and sharing. This is not an online leaderboard: scores are kept only on your device, and any shared target is user-provided.</p><p><strong>Privacy:</strong> No account is needed. There are no cookies, ads, payments, automatic analytics uploads or third-party trackers. Your scores and simple usage counters stay in your browser's local storage. You can export or delete them at any time.</p><p><strong>Research disclosure:</strong> Saying you might buy a cosmetic option is a survey answer, not a purchase, deposit or promise.</p><button type="button" class="primary" id="got-it">Got it</button></div></dialog>
+  <dialog id="info-dialog"><div class="dialog-body"><button type="button" class="dialog-close" id="close-info" aria-label="Close">×</button><span class="micro-label">OPEN PROTOTYPE / PILOT 01</span><h2>What is LoopLab?</h2><p>A small independent set of three playable browser challenges, made to measure whether people enjoy returning and sharing. This is not an online leaderboard: scores are kept only on your device, and any shared target is user-provided.</p><p><strong>Privacy:</strong> No account is needed. There are no ads or payments. Scores stay on your device. Optional analytics is off until you choose Allow. When enabled, game starts, completions, replays, sharing actions and theme answers are sent to PostHog with a random browser identifier stored for up to 90 days. This allows us to measure return visits. No names, email, full URLs or recordings are sent by the game. PostHog receives network information such as your IP address when processing requests. Declining does not affect play. Stopping analytics deletes the local identifier and prevents future uploads; it does not erase events already received.</p><p><strong>Research disclosure:</strong> Saying you might buy a cosmetic option is a survey answer, not a purchase, deposit or promise.</p><button type="button" class="primary" id="got-it">Got it</button></div></dialog>
+  <script src="./analytics-config.js"></script>
+  <script src="./analytics.js"></script>
   <script>
 /* LoopLab Pilot 01: 3 independent skill games, zero external dependencies.
-   No remote telemetry, ads, payment, user tracking or third-party libraries. */
+   Optional consent-based event collection is configured separately; no ads or payments. */
 (function () {
   'use strict';
   const $ = (id) => document.getElementById(id);
   const query = new URLSearchParams(location.search);
+  let storage;try{storage=localStorage;}catch{storage={getItem:()=>null,setItem:()=>{},removeItem:()=>{}};}
+  const analytics=window.makeLoopLabAnalytics ? window.makeLoopLabAnalytics(window.LOOPLAB_ANALYTICS||{}, {
+    storage,uuid:()=>crypto.randomUUID(),now:()=>Date.now(),
+    blocked:navigator.doNotTrack==='1'||navigator.globalPrivacyControl===true||query.get('qa')==='1',
+    send:(url,body)=>{fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),credentials:'omit',referrerPolicy:'no-referrer',keepalive:true}).catch(()=>{});}
+  }) : {track:()=>false,ready:false,choice:()=>null};
+  const track=(event,props={})=>analytics.track(event,props);
+  function renderConsent(){
+    $('analytics-options').classList.toggle('hidden',!analytics.ready);
+    $('analytics-status').textContent=!analytics.ready?'Optional analytics is not active yet. No usage data is uploaded.':analytics.choice()==='yes'?'Optional analytics allowed. You can stop future collection below.':'Optional analytics is off. Playing works the same either way.';
+  }
+  if(analytics.ready){
+    $('analytics-yes').addEventListener('click',()=>{analytics.consent(true);track('visit',{shared_entry:query.has('seed')});renderConsent();});
+    $('analytics-no').addEventListener('click',()=>{analytics.consent(false);renderConsent();});
+  }
+  renderConsent();track('visit',{shared_entry:query.has('seed')});
   const MODES = {
     odd: { title:'Spot the Odd', desc:'Find the square that\'s slightly different. How far can you go?', start:'Ready to spot the difference?', instruction:'Tap the square that looks different' },
     numbers: { title:'Number Dash', desc:'Tap the numbers in order. Push your speed, keep your focus.', start:'Ready for the number sprint?', instruction:'Tap the numbers in order, starting from 1' },
@@ -144,7 +163,7 @@
     document.querySelectorAll('.tab').forEach(b=>{const sel=b.dataset.game===mode;b.classList.toggle('selected',sel);b.setAttribute('aria-pressed',String(sel));});
   }
   function show(which){['intro','board-wrap','finished'].forEach(x=>$(x).classList.toggle('hidden',x!==which));}
-  function reset(selectedMode=mode){cleanTimers();mode=cleanMode(selectedMode);runState='idle';level=0;score=0;remaining=60;round=0;expected=0;current=[];seed=null;sharedModeReset();updateHeader();show('intro');}
+  function reset(selectedMode=mode){if(runState==='active')track('game_abandon',{mode});cleanTimers();mode=cleanMode(selectedMode);runState='idle';level=0;score=0;remaining=60;round=0;expected=0;current=[];seed=null;sharedModeReset();updateHeader();show('intro');}
   function sharedModeReset(){// Dedicated URL pins apply to its selected game only.
     if(query.get('g')!==mode){challengeTarget=null;sharedSeed=null;}
   }
@@ -158,9 +177,10 @@
   function penalize(){deadline-=2000;remaining=clamp(Math.ceil((deadline-performance.now())/1000),0,60);feedback('Not quite. −2 seconds',true);updateTime();if(remaining===0)finish();}
   function updateTime(){$('time').innerHTML=remaining+'<span class="unit">s</span>';$('progress').firstElementChild.style.width=(remaining/60*100)+'%';}
   function begin(daily=true){
+    const replay=runState==='finished';
     cleanTimers();isDaily=daily;runState='active';level=0;score=0;round=0;remaining=60;expected=0;
     seed= daily ? (sharedSeed===null?nowSeed():sharedSeed) : Math.floor(Math.random()*4294967296)>>>0;
-    rng=rngFrom(seed);updateHeader();show('board-wrap');feedback('');record('starts');
+    rng=rngFrom(seed);updateHeader();show('board-wrap');feedback('');record('starts');track('game_start',{mode,replay,run_type:daily?(sharedSeed===null?'daily':'shared'):'practice'});
     deadline=performance.now()+60000;
     interval=setInterval(()=>{remaining=clamp(Math.ceil((deadline-performance.now())/1000),0,60);updateTime();if(remaining<=0)finish();},200);
     nextRound();
@@ -216,7 +236,7 @@
     if(runState!=='active')return;runState='finished';cleanTimers();remaining=0;updateTime();
     const prev=stats.best[bestKey()]||0;
     const recordScore=score>prev;if(recordScore){stats.best[bestKey()]=score;safeWrite(stats);}
-    record('completes');$('best').textContent=stats.best[bestKey()]||0;
+    record('completes');track('game_complete',{mode,run_type:isDaily?(sharedSeed===null?'daily':'shared'):'practice'});$('best').textContent=stats.best[bestKey()]||0;
     $('finish-score').textContent=score+' points';
     const target=challengeTarget!==null?` Friend\'s shared target: ${challengeTarget}. ${score>challengeTarget?'You beat it!':score===challengeTarget?'It\'s a tie.':'Try again to beat it.'}`:'';
     $('finish-description').textContent=(recordScore?'New best on this device. ':'Nice run! ')+target+' Can a friend beat your score?';
@@ -233,7 +253,7 @@
       if(navigator.share){await navigator.share({title,text:message,url:link});}
       else if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(link);}
       else {const tmp=document.createElement('textarea');tmp.value=link;document.body.appendChild(tmp);tmp.select();const ok=document.execCommand('copy');tmp.remove();if(!ok)throw Error('Copy unavailable');}
-      stats.shares=(stats.shares||0)+1;safeWrite(stats);
+      track('share_success',{mode});stats.shares=(stats.shares||0)+1;safeWrite(stats);
       $('share-result').textContent='Shared or copied!';
     }catch(err){if(err.name!=='AbortError')$('share-result').textContent='Copy this link: '+link;}
   }
@@ -246,7 +266,7 @@
   $('copy-link').addEventListener('click',()=>share(false));
   $('open-info').addEventListener('click',()=>$('info-dialog').showModal());
   $('close-info').addEventListener('click',()=>$('info-dialog').close());$('got-it').addEventListener('click',()=>$('info-dialog').close());
-  function survey(choice){stats.survey={choice,date:dayId()};safeWrite(stats);$('survey-buttons').classList.add('hidden');$('survey-result').textContent='Thank you. This answer stays on this device; it does not represent a purchase.';}
+  function survey(choice){track('theme_interest',{choice});stats.survey={choice,date:dayId()};safeWrite(stats);$('survey-buttons').classList.add('hidden');$('survey-result').textContent='Thank you. This answer stays on this device; it does not represent a purchase.';}
   $('survey-yes').addEventListener('click',()=>survey('maybe'));
   $('survey-no').addEventListener('click',()=>survey('no'));
   function renderSurvey(){if(stats.survey){$('survey-buttons').classList.add('hidden');$('survey-result').textContent='You answered this survey. This answer stays on this device; it does not represent a purchase.';}else{$('survey-buttons').classList.remove('hidden');$('survey-result').textContent='';}}
