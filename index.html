@@ -71,7 +71,7 @@
         </div>
         <div class="panel-foot">
           <span class="privacy">🔒 Your scores stay on this device</span>
-          <button id="copy-link" type="button" class="ghost tiny">Copy daily challenge link ↗</button>
+          <button id="copy-link" type="button" class="ghost tiny">Share challenge link ↗</button>
         </div>
       </section>
       <section class="below" aria-label="Prototype feedback">
@@ -170,7 +170,11 @@
   function tile(idx,cls,styleText,contents,fn,aria){
     const b=document.createElement('button');b.type='button';b.className='tile '+cls;
     if(styleText)b.style.cssText=styleText;b.textContent=contents||'';b.setAttribute('aria-label',aria||String(idx+1));
-    b.addEventListener('click',fn);return b;
+    b.addEventListener('click',ev=>{
+      if(runState!=='active')return;
+      if(performance.now()>=deadline){finish();return;}
+      fn(ev);
+    });return b;
   }
   function feedback(text,bad=false){$('feedback').textContent=text;$('feedback').classList.toggle('bad',bad);}
   function addPoints(n){score+=n;$('score').textContent=score;}
@@ -266,10 +270,10 @@
   $('copy-link').addEventListener('click',()=>share(false));
   $('open-info').addEventListener('click',()=>$('info-dialog').showModal());
   $('close-info').addEventListener('click',()=>$('info-dialog').close());$('got-it').addEventListener('click',()=>$('info-dialog').close());
-  function survey(choice){track('theme_interest',{choice});stats.survey={choice,date:dayId()};safeWrite(stats);$('survey-buttons').classList.add('hidden');$('survey-result').textContent='Thank you. This answer stays on this device; it does not represent a purchase.';}
+  function survey(choice){track('theme_interest',{choice});stats.survey={choice,date:dayId()};safeWrite(stats);$('survey-buttons').classList.add('hidden');$('survey-result').textContent='Thank you. Your answer is saved here and sent only if optional analytics is allowed. This is not a purchase.';}
   $('survey-yes').addEventListener('click',()=>survey('maybe'));
   $('survey-no').addEventListener('click',()=>survey('no'));
-  function renderSurvey(){if(stats.survey){$('survey-buttons').classList.add('hidden');$('survey-result').textContent='You answered this survey. This answer stays on this device; it does not represent a purchase.';}else{$('survey-buttons').classList.remove('hidden');$('survey-result').textContent='';}}
+  function renderSurvey(){if(stats.survey){$('survey-buttons').classList.add('hidden');$('survey-result').textContent='You answered this survey. Answers are sent only when optional analytics is allowed. This is not a purchase.';}else{$('survey-buttons').classList.remove('hidden');$('survey-result').textContent='';}}
   $('export-metrics').addEventListener('click',()=>{
     const blob=new Blob([JSON.stringify({explanation:'Aggregated activity on this browser only. Not user analytics or a revenue measure.',data:stats},null,2)],{type:'application/json'});
     const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='looplab-local-activity.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500);

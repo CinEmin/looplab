@@ -40,3 +40,9 @@ Before optimization: inspect counts and data quality. Do not treat tiny samples 
 ## Known follow-up
 
 Verify background-tab timer fairness and inputs near expiry in a real browser. Confirm links after switching modes. Test keyboard/mobile usability, consent UI, storage unavailable, repeated consent clicks, and network failure. Monitor deployment service before repeated retries; do not change billing to resolve startup errors.
+
+## Follow-up release — 12 November 2026 (Europe/Istanbul)
+
+Added input-time deadline enforcement: delayed timer callbacks cannot allow late scoring. Three regression cases first failed with +10/+4/+6 points and passed after the guard. Full suite: 13 passed. Updated the theme-response wording to reflect consent-based upload and made the share label accurate for practice runs and native sharing.
+
+Distribution candidate: itch.io, whose official HTML5 guide supports an index.html-root ZIP and browser embedding. Listing copy is in DISTRIBUTION.md. No submission, account creation, external outreach or fee has occurred. Mobile touch-device validation and embedded-host sharing are still required before marking the listing mobile friendly. This release does not claim those checks passed.
