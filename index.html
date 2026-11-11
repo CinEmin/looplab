@@ -110,12 +110,13 @@
   const safeWrite=(x)=>{try{localStorage.setItem(STAT_KEY,JSON.stringify(x));}catch{}};
   const stats = safeRead();
   if (!stats.version) Object.assign(stats,{version:1, firstSeen:dayId(), days:[], starts:{},completes:{},shares:0,best:{},survey:null});
+  for (const key of ['best','starts','completes']) if (!stats[key] || typeof stats[key] !== 'object' || Array.isArray(stats[key])) stats[key]={};
   if (!Array.isArray(stats.days)) stats.days=[];
   if (!stats.days.includes(dayId())) stats.days.push(dayId());
   safeWrite(stats);
   const cleanMode=(value)=>validModes.includes(value)?value:'odd';
   let mode=cleanMode(query.get('g'));
-  let level=0,score=0,remaining=60,runState='idle',isDaily=true,seed=0,rng,interval=null,memoryTimeout=null,current=[],expected=0,round=0,challengeTarget=null;
+  let level=0,score=0,remaining=60,runState='idle',isDaily=true,seed=null,deadline=0,rng,interval=null,memoryTimeout=null,current=[],expected=0,round=0,challengeTarget=null;
   const targetRaw=query.get('target');
   if (targetRaw!==null && /^\d{1,5}$/.test(targetRaw)) challengeTarget=Math.min(99999,Number(targetRaw));
   const seedRaw=query.get('seed');
@@ -143,7 +144,7 @@
     document.querySelectorAll('.tab').forEach(b=>{const sel=b.dataset.game===mode;b.classList.toggle('selected',sel);b.setAttribute('aria-pressed',String(sel));});
   }
   function show(which){['intro','board-wrap','finished'].forEach(x=>$(x).classList.toggle('hidden',x!==which));}
-  function reset(selectedMode=mode){cleanTimers();mode=cleanMode(selectedMode);runState='idle';level=0;score=0;remaining=60;round=0;expected=0;current=[];sharedModeReset();updateHeader();show('intro');}
+  function reset(selectedMode=mode){cleanTimers();mode=cleanMode(selectedMode);runState='idle';level=0;score=0;remaining=60;round=0;expected=0;current=[];seed=null;sharedModeReset();updateHeader();show('intro');}
   function sharedModeReset(){// Dedicated URL pins apply to its selected game only.
     if(query.get('g')!==mode){challengeTarget=null;sharedSeed=null;}
   }
@@ -154,13 +155,14 @@
   }
   function feedback(text,bad=false){$('feedback').textContent=text;$('feedback').classList.toggle('bad',bad);}
   function addPoints(n){score+=n;$('score').textContent=score;}
-  function penalize(){remaining=clamp(remaining-2,0,60);feedback('Not quite. −2 seconds',true);updateTime();if(remaining===0)finish();}
+  function penalize(){deadline-=2000;remaining=clamp(Math.ceil((deadline-performance.now())/1000),0,60);feedback('Not quite. −2 seconds',true);updateTime();if(remaining===0)finish();}
   function updateTime(){$('time').innerHTML=remaining+'<span class="unit">s</span>';$('progress').firstElementChild.style.width=(remaining/60*100)+'%';}
   function begin(daily=true){
     cleanTimers();isDaily=daily;runState='active';level=0;score=0;round=0;remaining=60;expected=0;
     seed= daily ? (sharedSeed===null?nowSeed():sharedSeed) : Math.floor(Math.random()*4294967296)>>>0;
     rng=rngFrom(seed);updateHeader();show('board-wrap');feedback('');record('starts');
-    interval=setInterval(()=>{remaining--;updateTime();if(remaining<=0)finish();},1000);
+    deadline=performance.now()+60000;
+    interval=setInterval(()=>{remaining=clamp(Math.ceil((deadline-performance.now())/1000),0,60);updateTime();if(remaining<=0)finish();},200);
     nextRound();
   }
   function nextRound(){if(runState!=='active')return;round++;level++;if(mode==='odd')oddRound();else if(mode==='numbers')numbersRound();else memoryRound();}
@@ -221,7 +223,7 @@
     $('share-result').textContent='';show('finished');
   }
   function makeLink(withTarget){
-    const u=new URL(location.href);u.search='';u.searchParams.set('g',mode);u.searchParams.set('seed',String(seed||nowSeed()));
+    const u=new URL(location.href);u.search='';u.searchParams.set('g',mode);u.searchParams.set('seed',String(seed ?? sharedSeed ?? nowSeed()));
     if(withTarget&&runState==='finished')u.searchParams.set('target',String(score));
     return u.href;
   }
@@ -253,7 +255,6 @@
     const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='looplab-local-activity.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500);
   });
   $('delete-metrics').addEventListener('click',()=>{if(!confirm('Delete all LoopLab scores and local activity on this device?'))return;try{localStorage.removeItem(STAT_KEY);}catch{};location.reload();});
-  if('serviceWorker'in navigator&&location.protocol==='https:')navigator.serviceWorker.register('./sw.js').catch(()=>{});
   reset(mode);renderSurvey();
   window.__loopLabQA=Object.freeze({getState:()=>({mode,score,remaining,runState,level,seed}),begin,nextRound,finish,makeLink,stats:()=>safeRead()});
 })();
