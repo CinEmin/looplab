@@ -163,7 +163,7 @@
     document.querySelectorAll('.tab').forEach(b=>{const sel=b.dataset.game===mode;b.classList.toggle('selected',sel);b.setAttribute('aria-pressed',String(sel));});
   }
   function show(which){['intro','board-wrap','finished'].forEach(x=>$(x).classList.toggle('hidden',x!==which));}
-  function reset(selectedMode=mode){if(runState==='active')track('game_abandon',{mode});cleanTimers();mode=cleanMode(selectedMode);runState='idle';level=0;score=0;remaining=60;round=0;expected=0;current=[];seed=null;sharedModeReset();updateHeader();show('intro');}
+  function reset(selectedMode=mode){$('share-result').textContent='';if(runState==='active')track('game_abandon',{mode});cleanTimers();mode=cleanMode(selectedMode);runState='idle';level=0;score=0;remaining=60;round=0;expected=0;current=[];seed=null;sharedModeReset();updateHeader();show('intro');}
   function sharedModeReset(){// Dedicated URL pins apply to its selected game only.
     if(query.get('g')!==mode){challengeTarget=null;sharedSeed=null;}
   }
