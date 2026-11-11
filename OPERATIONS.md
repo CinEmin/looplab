@@ -46,3 +46,10 @@ Verify background-tab timer fairness and inputs near expiry in a real browser. C
 Added input-time deadline enforcement: delayed timer callbacks cannot allow late scoring. Three regression cases first failed with +10/+4/+6 points and passed after the guard. Full suite: 13 passed. Updated the theme-response wording to reflect consent-based upload and made the share label accurate for practice runs and native sharing.
 
 Distribution candidate: itch.io, whose official HTML5 guide supports an index.html-root ZIP and browser embedding. Listing copy is in DISTRIBUTION.md. No submission, account creation, external outreach or fee has occurred. Mobile touch-device validation and embedded-host sharing are still required before marking the listing mobile friendly. This release does not claim those checks passed.
+
+
+## Sharing and distribution preparation — 12 November 2026
+
+Release pilot-01.3: canonical public challenge URLs work from embedded hosts; copy feedback is visible before a run ends. Analytics adds only the allowlisted channel site/itch, with unchanged opt-in protections. Full suite: 15 passed. Chromium iframe widths 320/390 had no horizontal document overflow; Number Dash, Memory Flash and Odd scored correctly with mouse/keyboard. This is viewport QA, not physical Android/iOS touch testing. Shared-link clipboard output verified before start.
+
+Build the itch.io upload using `python scripts/build-itch.py`; ZIP contains only the three runtime files, with channel=itch. No payments/donations. Listing is not yet submitted.

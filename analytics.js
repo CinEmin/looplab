@@ -13,7 +13,7 @@
   try{
    const now=env.now();
    if(!identity||typeof identity.id!=='string'||!Number.isFinite(identity.created)||now-identity.created>90*86400000){identity={id:env.uuid(),created:now};env.storage.setItem(idKey,JSON.stringify(identity));}
-   const properties={$process_person_profile:false,$geoip_disable:true,release:'pilot-01.1'};
+   const properties={$process_person_profile:false,$geoip_disable:true,release:'pilot-01.3',channel:config.channel==='itch'?'itch':'site'};
    if(['odd','numbers','memory'].includes(props.mode))properties.mode=props.mode;
    if(['daily','practice','shared'].includes(props.run_type))properties.run_type=props.run_type;
    if(['maybe','no'].includes(props.choice))properties.choice=props.choice;

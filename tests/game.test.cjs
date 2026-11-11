@@ -22,3 +22,11 @@ for(const mode of ['odd','numbers','memory']) test(mode+': input at the deadline
   assert.equal(b.api.getState().runState,'finished');
   assert.equal(b.events.filter(e=>e.name==='game_complete').length,1);
 });
+
+test('shared challenge opens the public game rather than an embedded asset host',()=>{
+ const b=boot('{}','?g=numbers&seed=0#game-panel'); b.api.begin(); b.api.finish();
+ const url=new URL(b.api.makeLink(true));
+ assert.equal(url.origin,'https://looplab-pilot.racing-thyme-8277.chatgpt.site');
+ assert.equal(url.pathname,'/');assert.equal(url.hash,'');
+ assert.equal(url.searchParams.get('g'),'numbers');assert.equal(url.searchParams.get('target'),'0');
+});

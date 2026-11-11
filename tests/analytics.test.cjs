@@ -6,3 +6,10 @@ test('consent sends only approved event properties',()=>{const {a,sent}=setup();
 test('revocation deletes identifier and blocks future transmission',()=>{const {a,data,sent}=setup();a.consent(true);a.track('visit');a.consent(false);a.track('game_start');assert.equal(sent.length,1);assert.equal(data.has('looplab_analytics_id'),false)});
 test('empty token cannot start collection',()=>{const {a,sent}=setup({token:'',host:'https://eu.i.posthog.com'});a.consent(true);a.track('visit');assert.equal(sent.length,0)});
 test('unapproved event and unsafe host cannot send',()=>{const {a,sent}=setup({token:'phc_test',host:'https://other.example'});a.consent(true);a.track('visit');assert.equal(sent.length,0)});
+
+test('channel attribution uses only recognized distribution labels',()=>{
+ for(const [channel,want] of [['itch','itch'],['site','site'],['private-url.example','site']]){
+  const {a,sent}=setup({token:'phc_test',host:'https://eu.i.posthog.com',channel});
+  a.consent(true);a.track('visit');assert.equal(sent[0].body.properties.channel,want);
+ }
+});

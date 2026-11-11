@@ -66,13 +66,13 @@
             <h3 id="finish-score">0 points</h3>
             <p id="finish-description">Nice work. Can a friend beat your score?</p>
             <div class="finish-actions"><button id="share-btn" type="button" class="primary">Challenge a friend ↗</button><button id="play-again" type="button" class="secondary">Play again</button></div>
-            <p class="micro-note" id="share-result" aria-live="polite"></p>
           </div>
         </div>
         <div class="panel-foot">
           <span class="privacy">🔒 Your scores stay on this device</span>
           <button id="copy-link" type="button" class="ghost tiny">Share challenge link ↗</button>
         </div>
+        <p class="micro-note" id="share-result" aria-live="polite" style="overflow-wrap:anywhere"></p>
       </section>
       <section class="below" aria-label="Prototype feedback">
         <div class="feedback-card">
@@ -247,7 +247,7 @@
     $('share-result').textContent='';show('finished');
   }
   function makeLink(withTarget){
-    const u=new URL(location.href);u.search='';u.searchParams.set('g',mode);u.searchParams.set('seed',String(seed ?? sharedSeed ?? nowSeed()));
+    const u=new URL('https://looplab-pilot.racing-thyme-8277.chatgpt.site/');u.searchParams.set('g',mode);u.searchParams.set('seed',String(seed ?? sharedSeed ?? nowSeed()));
     if(withTarget&&runState==='finished')u.searchParams.set('target',String(score));
     return u.href;
   }

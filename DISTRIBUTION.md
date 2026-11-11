@@ -1,6 +1,6 @@
 # LoopLab distribution draft
 
-Status: prepared, not submitted. Budget: $0. No paid promotion, no purchases, no outreach sent.
+Status: listing and upload package prepared, not submitted. Budget: $0. No paid promotion, no purchases, no outreach sent.
 
 ## First channel
 
@@ -9,6 +9,8 @@ itch.io HTML5 listing. Official guides checked 12 November 2026:
 - https://itch.io/docs/creators/getting-started
 
 Use a free account and HTML project. Owner must complete account authentication and any binding terms if needed. Upload index.html, analytics.js and analytics-config.js at ZIP root. Do not enable payments or donations. Verify iframe behavior before publishing there; shared URLs must use the canonical public game address, not an ephemeral asset-host URL. Do not mark mobile friendly before actual mobile QA.
+
+Build: `python scripts/build-itch.py` produces `build/looplab-itch.zip`. Canonical sharing and iframe viewport QA verified; actual itch-hosted behavior remains to be tested.
 
 ## Listing text
 
