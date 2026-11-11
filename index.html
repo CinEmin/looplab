@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#161932">
+  <meta name="description" content="Three free, fast daily brain games. Compete with friends, play without an account, and share a challenge.">
+  <title>LoopLab — 60-second brain challenges</title>
+  
+  
+  <style>
+:root{color-scheme:dark;--bg:#111327;--panel:#1c2041;--border:#383e68;--light:#f1f3ff;--muted:#aab1d0;--lime:#b6ff70;--purple:#ba9aff;--purple2:#8067ff;--ease:cubic-bezier(.2,.8,.2,1);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{background:var(--bg);color:var(--light);margin:0;min-height:100vh;overflow-x:hidden}a{color:inherit}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible{outline:3px solid var(--lime);outline-offset:3px}button:disabled{opacity:.4;cursor:default}.hidden{display:none!important}.skip-link{position:absolute;top:-100px;left:18px;z-index:100;background:#fff;color:#000;padding:12px}.skip-link:focus{top:8px}.background-orb{position:fixed;border-radius:50%;filter:blur(75px);pointer-events:none;opacity:.19}.orb-a{width:460px;height:460px;background:#7546db;top:-200px;left:-180px}.orb-b{width:550px;height:550px;background:#336ac4;top:440px;right:-350px}.layout{position:relative;max-width:1050px;padding:26px 28px 18px;margin:auto}.topbar{display:flex;justify-content:space-between;gap:15px;align-items:center}.brand{display:flex;align-items:baseline;gap:0;text-decoration:none;font-size:23px;font-weight:850;letter-spacing:-1.1px}.brand-mark{color:var(--lime);font-size:29px;padding-right:7px}.brand-light{color:var(--purple)}.brand small{font-size:9px;letter-spacing:1.6px;color:var(--muted);margin-left:14px}.ghost{border:0;color:#c8d0ec;background:none}.ghost:hover,.text-link:hover{color:var(--lime)}.tiny{font-size:12px;font-weight:650}.hero{text-align:center;padding:58px 0 35px}.eyebrow,.micro-label{font-size:11px;color:var(--lime);font-weight:800;letter-spacing:1.65px}.hero h1{font-size:clamp(40px,5.5vw,64px);line-height:1.09;letter-spacing:-2.5px;margin:22px 0}.hero h1 em{color:var(--purple);font-weight:800;font-style:normal}.hero p{max-width:610px;margin:0 auto;color:var(--muted);line-height:1.65}.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0 14px}.tab{display:grid;grid-template-columns:43px 1fr;grid-template-rows:22px 16px;align-items:center;text-align:left;background:#191c38;color:var(--light);border:1px solid #32385e;border-radius:16px;padding:17px 18px;transition:border-color .15s,background .15s}.tab:hover{border-color:#8b79d3}.tab.selected{background:#2a2853;border-color:var(--purple)}.tab>span{grid-row:1/3;font-size:29px;color:var(--lime)}.tab strong{font-size:14px}.tab small{font-size:11px;color:var(--muted)}.game-panel{border:1px solid #434973;background:linear-gradient(160deg,rgba(43,46,86,.92),rgba(25,29,57,.97));border-radius:22px;padding:25px 28px 18px;box-shadow:0 35px 100px #08091655}.panel-head{display:flex;align-items:start;justify-content:space-between;gap:20px}.panel-head h2{font-size:29px;letter-spacing:-.8px;margin:9px 0 5px}.game-description{color:var(--muted);font-size:13px;margin:0}.pill{font-size:10px;color:var(--lime);border:1px solid #6f9768;background:#2d473c;border-radius:99px;padding:8px 12px;font-weight:800;letter-spacing:1px;white-space:nowrap}.statbar{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:22px 0 11px}.statbar>div{padding:13px 17px;background:#171b34;border:1px solid #34395d;border-radius:12px}.statbar small{font-size:10px;color:var(--muted);letter-spacing:1.1px;font-weight:750;display:block}.statbar strong{font-size:28px;display:block;padding-top:2px;font-variant-numeric:tabular-nums}.unit{font-size:13px;color:var(--muted);padding-left:2px}.progress{height:5px;border-radius:99px;overflow:hidden;background:#101327}.progress span{display:block;background:linear-gradient(90deg,#adf066,#b8a0ff);height:100%;width:100%;transition:width 180ms linear}.stage{min-height:460px;display:grid;place-items:center;padding:20px 10px}.stage-layer{width:100%;max-width:540px;text-align:center;margin:auto}.intro-icon{font-size:55px;color:var(--lime)}.intro-title{font-size:22px;margin:15px 0 7px;font-weight:800;letter-spacing:-.4px}.intro>p:not(.intro-title){color:var(--muted);font-size:13px;line-height:1.6}.primary,.secondary{display:inline-flex;align-items:center;justify-content:center;gap:12px;border-radius:11px;padding:13px 21px;font-weight:800;font-size:13px;transition:transform .15s var(--ease)}.primary{background:var(--lime);color:#15201a;border:1px solid #b8ff80}.primary:hover:not(:disabled){transform:translateY(-2px);background:#ccff9c}.secondary{color:var(--light);background:#292e51;border:1px solid #4b5178}.secondary:hover:not(:disabled){background:#394063}.intro .primary,.intro .secondary{display:flex;max-width:252px;margin:18px auto 0;width:100%}.intro .secondary{margin-top:9px}.board-wrap{width:100%;max-width:410px;text-align:center}.board-instruction{font-size:13px;color:#dce0f5;font-weight:700;margin:0 0 16px}.game-board{display:grid;gap:7px;margin:auto;max-width:372px;aspect-ratio:1/1}.tile{border:0;display:flex;align-items:center;justify-content:center;min-width:0;min-height:0;border-radius:10px;aspect-ratio:1/1;transition:transform .09s,filter .09s;touch-action:manipulation;-webkit-tap-highlight-color:transparent}.tile:active{transform:scale(.92)}.tile:focus-visible{outline:3px solid white;outline-offset:-4px}.tile-number{background:#373e7c;border:1px solid #5e6bb1;font-size:clamp(14px,5vw,24px);font-weight:800;color:#ecefff}.tile-number.good{background:#4d7748;color:white}.tile-memory{background:#30385e;border:1px solid #515d85}.tile-memory.show{background:var(--lime);box-shadow:0 0 22px #b6ff7088}.tile-memory.hit{background:#7e5dd3}.feedback{font-size:13px;font-weight:800;height:22px;margin:15px 0 0;color:var(--lime)}.feedback.bad{color:#ffc0bd}.trophy{color:#ffd87b}.finish h3{font-size:46px;margin:7px 0;letter-spacing:-1.5px}.finish>p:not(.micro-label){color:var(--muted)}.finish-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:25px 0 8px}.micro-note{font-size:12px;color:var(--muted);line-height:1.5}.panel-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-top:13px;border-top:1px solid #363b64}.privacy{font-size:11px;color:var(--muted)}.below{margin:22px 0 30px;display:grid;grid-template-columns:1.2fr 1fr;gap:16px}.feedback-card,.principle-card{background:#191d36;border:1px solid #363b61;border-radius:18px;padding:26px}.feedback-card h2{font-size:23px;letter-spacing:-.5px;margin:9px 0}.feedback-card p,.principle-card p{color:var(--muted);font-size:13px;line-height:1.7}.feedback-card p strong{color:#ecedff}.survey-buttons{display:flex;gap:9px}.principle-card>span{color:var(--purple);font-size:10px;letter-spacing:1.4px;font-weight:800}.principle-card h3{font-size:17px;margin:8px 0 4px}footer{border-top:1px solid #313656;display:flex;justify-content:space-between;gap:12px;padding:20px 0;color:var(--muted);font-size:11px}footer>div{display:flex;gap:15px}.text-link{background:none;border:0;color:var(--muted);font-size:11px;text-decoration:underline;text-underline-offset:2px;padding:0}dialog{background:#212644;color:var(--light);border:1px solid #737aa7;border-radius:17px;max-width:490px;width:calc(100% - 38px);padding:0;box-shadow:0 10px 90px #0009}dialog::backdrop{background:#080918b9}.dialog-body{padding:30px;position:relative}.dialog-body h2{font-size:26px}.dialog-body p{font-size:14px;line-height:1.7;color:var(--muted)}.dialog-close{position:absolute;right:16px;top:13px;border:0;background:none;color:var(--light);font-size:26px}
+@media(max-width:650px){.layout{padding:17px 14px}.brand small{display:none}.topbar .tiny{font-size:11px}.hero{padding:35px 0 20px}.hero h1{font-size:38px;letter-spacing:-1.7px}.hero p{font-size:13px}.tabs{gap:6px}.tab{padding:13px 8px 12px;display:flex;flex-direction:column;text-align:center;min-height:80px;justify-content:center;gap:5px}.tab>span{font-size:21px}.tab strong{font-size:11px}.tab small{font-size:9px}.game-panel{padding:17px 13px}.panel-head h2{font-size:25px}.game-description{font-size:11px}.pill{font-size:8px;padding:7px 8px}.statbar{gap:6px;margin-top:18px}.statbar>div{padding:11px 9px}.statbar small{font-size:8px}.statbar strong{font-size:23px}.stage{min-height:410px;padding:14px 3px}.game-board{gap:5px;max-width:calc(100vw - 75px)}.panel-foot{align-items:start}.panel-foot .tiny{max-width:130px;text-align:right}.below{grid-template-columns:1fr}.feedback-card,.principle-card{padding:21px}footer{flex-wrap:wrap}.finish h3{font-size:37px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;scroll-behavior:auto!important}}
+
+</style>
+</head>
+<body>
+  <a href="#game-panel" class="skip-link">Skip to game</a>
+  <div class="background-orb orb-a" aria-hidden="true"></div>
+  <div class="background-orb orb-b" aria-hidden="true"></div>
+  <div class="layout">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="LoopLab home"><span class="brand-mark">◈</span> Loop<span class="brand-light">Lab</span><small>EXPERIMENTAL ARCADE</small></a>
+      <button id="open-info" type="button" class="ghost tiny">About this prototype <span aria-hidden="true">↗</span></button>
+    </header>
+    <main>
+      <section class="hero" aria-labelledby="headline">
+        <div class="eyebrow">⚡ THREE GAMES. ONE MINUTE.</div>
+        <h1 id="headline">A tiny game break.<br><em>A big little win.</em></h1>
+        <p>Train your focus, challenge a friend, or try a fresh daily run. No downloads. No account. Free to play.</p>
+      </section>
+      <nav class="tabs" aria-label="Select challenge">
+        <button id="tab-odd" data-game="odd" class="tab selected" type="button" aria-pressed="true"><span>◈</span><strong>Spot the Odd</strong><small>Visual precision</small></button>
+        <button id="tab-numbers" data-game="numbers" class="tab" type="button" aria-pressed="false"><span>⌗</span><strong>Number Dash</strong><small>Fast sequences</small></button>
+        <button id="tab-memory" data-game="memory" class="tab" type="button" aria-pressed="false"><span>▦</span><strong>Memory Flash</strong><small>Recall &amp; focus</small></button>
+      </nav>
+      <section class="game-panel" id="game-panel" aria-label="Interactive game">
+        <div class="panel-head">
+          <div><p class="micro-label" id="challenge-label">TODAY'S DAILY CHALLENGE</p><h2 id="game-title">Spot the Odd</h2><p class="game-description" id="game-description">Find the square that's slightly different. How far can you go?</p></div>
+          <div class="pill" id="challenge-seed-label">DAILY</div>
+        </div>
+        <div class="statbar" aria-label="Game score and timer">
+          <div><small>SCORE</small><strong id="score" aria-live="polite">0</strong></div>
+          <div><small>BEST ON THIS DEVICE</small><strong id="best">0</strong></div>
+          <div><small>TIME LEFT</small><strong id="time">60<span class="unit">s</span></strong></div>
+        </div>
+        <div id="progress" class="progress" aria-hidden="true"><span></span></div>
+        <div class="stage" id="stage">
+          <div id="intro" class="intro stage-layer">
+            <div class="intro-icon">✦</div>
+            <p class="intro-title" id="intro-title">Ready to spot the difference?</p>
+            <p id="intro-desc">You have 60 seconds. Every correct answer earns points.</p>
+            <button id="start-btn" type="button" class="primary">Start daily run <span aria-hidden="true">→</span></button>
+            <button id="free-play-btn" type="button" class="secondary">Try random run</button>
+          </div>
+          <div id="board-wrap" class="board-wrap hidden" aria-live="off">
+            <p class="board-instruction" id="board-instruction">Tap the square that looks different</p>
+            <div id="game-board" class="game-board" aria-label="Challenge tiles"></div>
+            <p id="feedback" class="feedback" aria-live="polite"></p>
+          </div>
+          <div id="finished" class="finish stage-layer hidden">
+            <div class="intro-icon trophy">✺</div>
+            <p class="micro-label">CHALLENGE COMPLETE</p>
+            <h3 id="finish-score">0 points</h3>
+            <p id="finish-description">Nice work. Can a friend beat your score?</p>
+            <div class="finish-actions"><button id="share-btn" type="button" class="primary">Challenge a friend ↗</button><button id="play-again" type="button" class="secondary">Play again</button></div>
+            <p class="micro-note" id="share-result" aria-live="polite"></p>
+          </div>
+        </div>
+        <div class="panel-foot">
+          <span class="privacy">🔒 Your scores stay on this device</span>
+          <button id="copy-link" type="button" class="ghost tiny">Copy daily challenge link ↗</button>
+        </div>
+      </section>
+      <section class="below" aria-label="Prototype feedback">
+        <div class="feedback-card">
+          <span class="micro-label">HELP SHAPE THE GAME</span>
+          <h2>Would you use optional visual themes?</h2>
+          <p>We're testing interest in purely cosmetic add-ons. They would never change your score or give you an advantage. There is <strong>no checkout and no paid feature</strong> in this prototype.</p>
+          <div id="survey-buttons" class="survey-buttons"><button id="survey-yes" class="secondary" type="button">Yes, maybe</button><button id="survey-no" class="secondary" type="button">Not for me</button></div>
+          <p id="survey-result" class="micro-note" aria-live="polite"></p>
+        </div>
+        <div class="principle-card"><span>01 / DAILY PLAY</span><h3>Same puzzle, same day.</h3><p>Your daily seed is the same worldwide in UTC. Play it again or send it to a friend.</p><span>02 / FAIR BY DESIGN</span><h3>Skill before spending.</h3><p>No loot boxes, no paid advantages, no artificial countdown purchases.</p></div>
+      </section>
+    </main>
+    <footer><span>LoopLab is a free experiment. © 2026.</span><div><button id="export-metrics" class="text-link" type="button">Export my local activity</button><button id="delete-metrics" class="text-link" type="button">Delete local activity</button></div></footer>
+  </div>
+  <dialog id="info-dialog"><div class="dialog-body"><button type="button" class="dialog-close" id="close-info" aria-label="Close">×</button><span class="micro-label">OPEN PROTOTYPE / PILOT 01</span><h2>What is LoopLab?</h2><p>A small independent set of three playable browser challenges, made to measure whether people enjoy returning and sharing. This is not an online leaderboard: scores are kept only on your device, and any shared target is user-provided.</p><p><strong>Privacy:</strong> No account is needed. There are no cookies, ads, payments, automatic analytics uploads or third-party trackers. Your scores and simple usage counters stay in your browser's local storage. You can export or delete them at any time.</p><p><strong>Research disclosure:</strong> Saying you might buy a cosmetic option is a survey answer, not a purchase, deposit or promise.</p><button type="button" class="primary" id="got-it">Got it</button></div></dialog>
+  <script>
+/* LoopLab Pilot 01: 3 independent skill games, zero external dependencies.
+   No remote telemetry, ads, payment, user tracking or third-party libraries. */
+(function () {
+  'use strict';
+  const $ = (id) => document.getElementById(id);
+  const query = new URLSearchParams(location.search);
+  const MODES = {
+    odd: { title:'Spot the Odd', desc:'Find the square that\'s slightly different. How far can you go?', start:'Ready to spot the difference?', instruction:'Tap the square that looks different' },
+    numbers: { title:'Number Dash', desc:'Tap the numbers in order. Push your speed, keep your focus.', start:'Ready for the number sprint?', instruction:'Tap the numbers in order, starting from 1' },
+    memory: { title:'Memory Flash', desc:'Remember the glowing tiles, then tap them from memory.', start:'Ready to test your memory?', instruction:'Remember the glowing squares' }
+  };
+  const validModes = Object.keys(MODES);
+  const STAT_KEY='looplab_v1_stats';
+  const dayId = () => new Date().toISOString().slice(0,10);
+  const hash = (str) => { let h=2166136261;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0; };
+  const rngFrom = seed => {let x=seed>>>0;return () => {x+=0x6D2B79F5;let t=x;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296;};};
+  const shuffle=(arr,rng)=>{for(let i=arr.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;};
+  const safeRead=()=>{try{const x=JSON.parse(localStorage.getItem(STAT_KEY)||'{}');return x&&typeof x==='object'?x:{};}catch{return {};}};
+  const safeWrite=(x)=>{try{localStorage.setItem(STAT_KEY,JSON.stringify(x));}catch{}};
+  const stats = safeRead();
+  if (!stats.version) Object.assign(stats,{version:1, firstSeen:dayId(), days:[], starts:{},completes:{},shares:0,best:{},survey:null});
+  if (!Array.isArray(stats.days)) stats.days=[];
+  if (!stats.days.includes(dayId())) stats.days.push(dayId());
+  safeWrite(stats);
+  const cleanMode=(value)=>validModes.includes(value)?value:'odd';
+  let mode=cleanMode(query.get('g'));
+  let level=0,score=0,remaining=60,runState='idle',isDaily=true,seed=0,rng,interval=null,memoryTimeout=null,current=[],expected=0,round=0,challengeTarget=null;
+  const targetRaw=query.get('target');
+  if (targetRaw!==null && /^\d{1,5}$/.test(targetRaw)) challengeTarget=Math.min(99999,Number(targetRaw));
+  const seedRaw=query.get('seed');
+  let sharedSeed = seedRaw&&/^\d{1,10}$/.test(seedRaw)?(Number(seedRaw)>>>0):null;
+  const nowSeed=()=>hash(dayId()+':'+mode);
+  const board=$('game-board');
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+  const cleanTimers=()=>{if(interval!==null){clearInterval(interval);interval=null;}if(memoryTimeout!==null){clearTimeout(memoryTimeout);memoryTimeout=null;}};
+  function record(kind){
+    if(!Object.prototype.hasOwnProperty.call(stats,kind)||typeof stats[kind]!=='object')stats[kind]={};
+    stats[kind][mode]=(stats[kind][mode]||0)+1;safeWrite(stats);
+  }
+  function bestKey(){return mode+':'+(isDaily?'daily:'+dayId():'practice');}
+  function updateHeader(){
+    $('game-title').textContent=MODES[mode].title;$('game-description').textContent=MODES[mode].desc;
+    $('intro-title').textContent=MODES[mode].start;
+    $('intro-desc').textContent='You have 60 seconds. Every correct move earns points. Wrong taps cost 2 seconds.';
+    $('challenge-seed-label').textContent=sharedSeed!==null?'SHARED CHALLENGE':isDaily?'DAILY':'PRACTICE';
+    $('challenge-label').textContent=sharedSeed!==null?'FRIEND CHALLENGE':isDaily?'TODAY\'S DAILY CHALLENGE':'PRACTICE RUN';
+    $('start-btn').textContent=sharedSeed!==null?'Start friend challenge →':'Start daily run →';
+    $('best').textContent=stats.best[bestKey()]||0;
+    $('score').textContent=score;$('time').innerHTML=remaining+'<span class="unit">s</span>';
+    $('board-instruction').textContent=MODES[mode].instruction;
+    $('progress').firstElementChild.style.width=(remaining/60*100)+'%';
+    document.querySelectorAll('.tab').forEach(b=>{const sel=b.dataset.game===mode;b.classList.toggle('selected',sel);b.setAttribute('aria-pressed',String(sel));});
+  }
+  function show(which){['intro','board-wrap','finished'].forEach(x=>$(x).classList.toggle('hidden',x!==which));}
+  function reset(selectedMode=mode){cleanTimers();mode=cleanMode(selectedMode);runState='idle';level=0;score=0;remaining=60;round=0;expected=0;current=[];sharedModeReset();updateHeader();show('intro');}
+  function sharedModeReset(){// Dedicated URL pins apply to its selected game only.
+    if(query.get('g')!==mode){challengeTarget=null;sharedSeed=null;}
+  }
+  function tile(idx,cls,styleText,contents,fn,aria){
+    const b=document.createElement('button');b.type='button';b.className='tile '+cls;
+    if(styleText)b.style.cssText=styleText;b.textContent=contents||'';b.setAttribute('aria-label',aria||String(idx+1));
+    b.addEventListener('click',fn);return b;
+  }
+  function feedback(text,bad=false){$('feedback').textContent=text;$('feedback').classList.toggle('bad',bad);}
+  function addPoints(n){score+=n;$('score').textContent=score;}
+  function penalize(){remaining=clamp(remaining-2,0,60);feedback('Not quite. −2 seconds',true);updateTime();if(remaining===0)finish();}
+  function updateTime(){$('time').innerHTML=remaining+'<span class="unit">s</span>';$('progress').firstElementChild.style.width=(remaining/60*100)+'%';}
+  function begin(daily=true){
+    cleanTimers();isDaily=daily;runState='active';level=0;score=0;round=0;remaining=60;expected=0;
+    seed= daily ? (sharedSeed===null?nowSeed():sharedSeed) : Math.floor(Math.random()*4294967296)>>>0;
+    rng=rngFrom(seed);updateHeader();show('board-wrap');feedback('');record('starts');
+    interval=setInterval(()=>{remaining--;updateTime();if(remaining<=0)finish();},1000);
+    nextRound();
+  }
+  function nextRound(){if(runState!=='active')return;round++;level++;if(mode==='odd')oddRound();else if(mode==='numbers')numbersRound();else memoryRound();}
+  function oddRound(){
+    const count=clamp(2+Math.floor(level/3),2,7);const size=count*count;const odd=Math.floor(rng()*size);
+    const hue=Math.floor(rng()*360),sat=clamp(70-Math.floor(level/4),52,70),lum=clamp(64-Math.floor(level/3),48,64);
+    const delta=clamp(20-Math.floor(level/2),7,20);const sign=rng()<.5?-1:1;
+    board.innerHTML='';board.style.gridTemplateColumns=`repeat(${count},minmax(0,1fr))`;
+    for(let i=0;i<size;i++){
+      const light=i===odd?clamp(lum+sign*delta,24,83):lum;
+      board.appendChild(tile(i,'tile-odd',`background:hsl(${hue} ${sat}% ${light}%);`, '',()=>{
+        if(runState!=='active')return;
+        if(i===odd){addPoints(10+Math.floor(level/4)*2);feedback('Great eye!');nextRound();}else penalize();
+      },`Color tile ${i+1} of ${size}`));
+    }
+  }
+  function numbersRound(){
+    const count=clamp(9+Math.floor((level-1)/2)*3,9,25);const width=count<=9?3:count<=16?4:5;
+    const order=shuffle(Array.from({length:count},(_,i)=>i+1),rng);
+    board.innerHTML='';board.style.gridTemplateColumns=`repeat(${width},minmax(0,1fr))`;
+    expected=1;$('board-instruction').textContent=`Tap in order: ${expected} / ${count}`;
+    order.forEach(n=>board.appendChild(tile(n,'tile-number','',String(n),ev=>{
+      if(runState!=='active'||ev.currentTarget.disabled)return;
+      if(n===expected){ev.currentTarget.disabled=true;ev.currentTarget.classList.add('good');addPoints(4);expected++;
+        if(expected>count){feedback('Sequence complete!');nextRound();}else {$('board-instruction').textContent=`Tap in order: ${expected} / ${count}`;feedback('');}
+      }else penalize();
+    },`Number ${n}`)));
+  }
+  function memoryRound(){
+    const n=clamp(2+Math.floor((level-1)/3),2,7),width=4,size=16;
+    const picked=shuffle(Array.from({length:size},(_,i)=>i),rng).slice(0,n);
+    current=picked.slice();expected=0;board.innerHTML='';board.style.gridTemplateColumns=`repeat(${width},minmax(0,1fr))`;
+    $('board-instruction').textContent=`Memorize ${n} glowing squares...`;
+    for(let i=0;i<size;i++)board.appendChild(tile(i,'tile-memory'+(picked.includes(i)?' show':''),'','',()=>{
+      if(runState!=='active'||memoryTimeout!==null)return;
+      const btn=board.children[i];if(btn.classList.contains('hit'))return;
+      if(picked.includes(i)){
+        btn.classList.add('hit');addPoints(6);expected++;
+        if(expected===n){feedback('Perfect memory!');nextRound();}
+        else feedback(`${expected} of ${n} correct`);
+      } else penalize();
+    },`Memory tile ${i+1}`));
+    memoryTimeout=setTimeout(()=>{
+      memoryTimeout=null;if(runState!=='active')return;
+      board.querySelectorAll('.show').forEach(el=>el.classList.remove('show'));
+      $('board-instruction').textContent='Tap the squares you remember';
+      feedback('Your turn');
+    },clamp(1900-Math.floor(level/2)*100,900,1900));
+  }
+  function finish(){
+    if(runState!=='active')return;runState='finished';cleanTimers();remaining=0;updateTime();
+    const prev=stats.best[bestKey()]||0;
+    const recordScore=score>prev;if(recordScore){stats.best[bestKey()]=score;safeWrite(stats);}
+    record('completes');$('best').textContent=stats.best[bestKey()]||0;
+    $('finish-score').textContent=score+' points';
+    const target=challengeTarget!==null?` Friend\'s shared target: ${challengeTarget}. ${score>challengeTarget?'You beat it!':score===challengeTarget?'It\'s a tie.':'Try again to beat it.'}`:'';
+    $('finish-description').textContent=(recordScore?'New best on this device. ':'Nice run! ')+target+' Can a friend beat your score?';
+    $('share-result').textContent='';show('finished');
+  }
+  function makeLink(withTarget){
+    const u=new URL(location.href);u.search='';u.searchParams.set('g',mode);u.searchParams.set('seed',String(seed||nowSeed()));
+    if(withTarget&&runState==='finished')u.searchParams.set('target',String(score));
+    return u.href;
+  }
+  async function share(withTarget){
+    const link=makeLink(withTarget),title='LoopLab challenge',message=withTarget?`I scored ${score} in ${MODES[mode].title}. Can you beat me?`:`Try ${MODES[mode].title} with me!`;
+    try{
+      if(navigator.share){await navigator.share({title,text:message,url:link});}
+      else if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(link);}
+      else {const tmp=document.createElement('textarea');tmp.value=link;document.body.appendChild(tmp);tmp.select();const ok=document.execCommand('copy');tmp.remove();if(!ok)throw Error('Copy unavailable');}
+      stats.shares=(stats.shares||0)+1;safeWrite(stats);
+      $('share-result').textContent='Shared or copied!';
+    }catch(err){if(err.name!=='AbortError')$('share-result').textContent='Copy this link: '+link;}
+  }
+  document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
+    const u=new URL(location.href);u.search='';u.searchParams.set('g',b.dataset.game);history.replaceState(null,'',u);
+    sharedSeed=null;challengeTarget=null;reset(b.dataset.game);
+  }));
+  $('start-btn').addEventListener('click',()=>begin(true));$('free-play-btn').addEventListener('click',()=>begin(false));
+  $('play-again').addEventListener('click',()=>begin(isDaily));$('share-btn').addEventListener('click',()=>share(true));
+  $('copy-link').addEventListener('click',()=>share(false));
+  $('open-info').addEventListener('click',()=>$('info-dialog').showModal());
+  $('close-info').addEventListener('click',()=>$('info-dialog').close());$('got-it').addEventListener('click',()=>$('info-dialog').close());
+  function survey(choice){stats.survey={choice,date:dayId()};safeWrite(stats);$('survey-buttons').classList.add('hidden');$('survey-result').textContent='Thank you. This answer stays on this device; it does not represent a purchase.';}
+  $('survey-yes').addEventListener('click',()=>survey('maybe'));
+  $('survey-no').addEventListener('click',()=>survey('no'));
+  function renderSurvey(){if(stats.survey){$('survey-buttons').classList.add('hidden');$('survey-result').textContent='You answered this survey. This answer stays on this device; it does not represent a purchase.';}else{$('survey-buttons').classList.remove('hidden');$('survey-result').textContent='';}}
+  $('export-metrics').addEventListener('click',()=>{
+    const blob=new Blob([JSON.stringify({explanation:'Aggregated activity on this browser only. Not user analytics or a revenue measure.',data:stats},null,2)],{type:'application/json'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='looplab-local-activity.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+  });
+  $('delete-metrics').addEventListener('click',()=>{if(!confirm('Delete all LoopLab scores and local activity on this device?'))return;try{localStorage.removeItem(STAT_KEY);}catch{};location.reload();});
+  if('serviceWorker'in navigator&&location.protocol==='https:')navigator.serviceWorker.register('./sw.js').catch(()=>{});
+  reset(mode);renderSurvey();
+  window.__loopLabQA=Object.freeze({getState:()=>({mode,score,remaining,runState,level,seed}),begin,nextRound,finish,makeLink,stats:()=>safeRead()});
+})();
+
+</script>
+</body>
+</html>
