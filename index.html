@@ -4,8 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#161932">
-  <meta name="description" content="Three free, fast daily brain games. Compete with friends, play without an account, and share a challenge.">
-  <title>LoopLab — 60-second brain challenges</title>
+  <meta name="description" content="A free 15-level memory journey with saved progress, gentle retries, and three quick browser games.">
+  <title>LoopLab — Memory Journey &amp; quick games</title>
+  <link rel="stylesheet" href="./journey.css">
   
   
   <style>
@@ -41,10 +42,16 @@
     </header>
     <main>
       <section class="hero" aria-labelledby="headline">
-        <div class="eyebrow">⚡ THREE GAMES. ONE MINUTE.</div>
-        <h1 id="headline">A tiny game break.<br><em>A big little win.</em></h1>
-        <p>Train your focus, challenge a friend, or try a fresh daily run. No downloads. No account. Free to play.</p>
+        <div class="eyebrow">✦ A LITTLE FURTHER, EVERY TIME.</div>
+        <h1 id="headline">One more pattern.<br><em>One more discovery.</em></h1>
+        <p>Explore 15 memory levels at your own pace. Discover new rules, earn stars, and pick up where you left off. Free. No account.</p>
       </section>
+      <div class="experience-switch" aria-label="Choose play mode"><button id="select-journey" type="button" aria-pressed="true">Memory Journey</button><button id="select-quick" type="button" aria-pressed="false">60-second games</button></div>
+      <section id="journey-panel" class="journey-panel" aria-label="Memory Journey">
+       <div id="journey-map"><p class="micro-label">MEMORY JOURNEY · 3 CHAPTERS</p><h2>A trail worth remembering.</h2><p class="journey-lead">Start with a few glowing tiles. Then follow a sequence — and learn to reverse it. Two rounds per level, three chances, unlimited retries. There’s no clock to race.</p><p id="journey-summary"></p><button id="journey-resume" class="primary" type="button">Start level 1 →</button><div id="journey-levels"></div><p id="journey-save"></p><p class="micro-note">Stars: 3 for a clean level, 2 with mistakes, 1 with a hint. Hints are always free. Replaying can only improve your stars.</p></div>
+       <div id="journey-play" class="hidden"><div class="journey-top"><div><p class="micro-label">MEMORY JOURNEY</p><h2 id="journey-heading"></h2></div><button id="journey-back" class="ghost" type="button">Level map</button></div><p id="journey-rule" class="journey-rule"></p><div class="journey-stats"><span id="journey-round"></span><span id="journey-lives"></span><span>No time limit</span></div><div id="journey-board" class="game-board journey-board" aria-label="Memory journey tiles"></div><p id="journey-status" class="journey-status" role="status"></p><div class="journey-actions"><button id="journey-watch" class="primary" type="button">Watch pattern →</button><button id="journey-hint" class="secondary hidden" type="button">Show again · 1-star help</button><button id="journey-next" class="primary hidden" type="button">Next round →</button><button id="journey-retry" class="primary hidden" type="button">Retry this level →</button></div></div>
+      </section>
+      <div id="quick-games">
       <nav class="tabs" aria-label="Select challenge">
         <button id="tab-odd" data-game="odd" class="tab selected" type="button" aria-pressed="true"><span>◈</span><strong>Spot the Odd</strong><small>Visual precision</small></button>
         <button id="tab-numbers" data-game="numbers" class="tab" type="button" aria-pressed="false"><span>⌗</span><strong>Number Dash</strong><small>Fast sequences</small></button>
@@ -88,6 +95,7 @@
         </div>
         <p class="micro-note" id="share-result" aria-live="polite" style="overflow-wrap:anywhere"></p>
       </section>
+      </div>
       <section class="below" aria-label="Prototype feedback">
         <div class="feedback-card">
           <span class="micro-label">HELP SHAPE THE GAME</span>
@@ -96,13 +104,13 @@
           <div id="survey-buttons" class="survey-buttons"><button id="survey-yes" class="secondary" type="button">Yes, maybe</button><button id="survey-no" class="secondary" type="button">Not for me</button></div>
           <p id="survey-result" class="micro-note" aria-live="polite"></p>
         </div>
-        <div class="principle-card"><span>01 / DAILY PLAY</span><h3>Same puzzle, same day.</h3><p>Your daily seed is the same worldwide in UTC. Play it again or send it to a friend.</p><span>02 / FAIR BY DESIGN</span><h3>Skill before spending.</h3><p>No loot boxes, no paid advantages, no artificial countdown purchases.</p></div>
+        <div class="principle-card"><span>01 / YOUR PACE</span><h3>A journey you can return to.</h3><p>Journey progress stays on this browser. For a short break, the 60-second games still have daily puzzles and friend challenges.</p><span>02 / FAIR BY DESIGN</span><h3>Skill before spending.</h3><p>No loot boxes, no paid advantages, no artificial countdown purchases.</p></div>
       </section>
     </main>
     <section class="feedback-card" aria-label="Optional analytics"><h2>Help improve LoopLab?</h2><p>Optional usage measurement helps us learn which games people return to. Read “About this prototype” for details. Your choice does not affect play.</p><p id="analytics-status" role="status"></p><div id="analytics-options" class="survey-buttons hidden"><button id="analytics-yes" type="button" class="secondary">Allow optional analytics</button><button id="analytics-no" type="button" class="secondary">Decline / stop analytics</button></div></section>
     <footer><span>LoopLab is a free experiment. © 2026.</span><div><button id="export-metrics" class="text-link" type="button">Export my local activity</button><button id="delete-metrics" class="text-link" type="button">Delete local activity</button></div></footer>
   </div>
-  <dialog id="info-dialog" aria-labelledby="info-title"><div class="dialog-body"><button type="button" class="dialog-close" id="close-info" aria-label="Close">×</button><span class="micro-label">OPEN PROTOTYPE / PILOT 01</span><h2 id="info-title">What is LoopLab?</h2><p>A small independent set of three playable browser challenges, made to measure whether people enjoy returning and sharing. This is not an online leaderboard: scores are kept only on your device, and any shared target is user-provided.</p><p><strong>Privacy:</strong> No account is needed. There are no ads or payments. Scores stay on your device. Optional analytics is off until you choose Allow. When enabled, game starts, completions, replays, sharing actions and theme answers are sent to PostHog with a random browser identifier stored for up to 90 days. This allows us to measure return visits. No names, email, full URLs or recordings are sent by the game. PostHog receives network information such as your IP address when processing requests. Declining does not affect play. Stopping analytics deletes the local identifier and prevents future uploads; it does not erase events already received.</p><p><strong>Research disclosure:</strong> Saying you might buy a cosmetic option is a survey answer, not a purchase, deposit or promise.</p><button type="button" class="primary" id="got-it">Got it</button></div></dialog>
+  <dialog id="info-dialog" aria-labelledby="info-title"><div class="dialog-body"><button type="button" class="dialog-close" id="close-info" aria-label="Close">×</button><span class="micro-label">OPEN PROTOTYPE / PILOT 01</span><h2 id="info-title">What is LoopLab?</h2><p>A small independent set of three playable browser challenges, made to measure whether people enjoy returning and sharing. This is not an online leaderboard: scores are kept only on your device, and any shared target is user-provided.</p><p><strong>Privacy:</strong> No account is needed. There are no ads or payments. Scores stay on your device. Optional analytics is off until you choose Allow. When enabled, game starts, completions, replays, journey level numbers, hints, retries, sharing actions and theme answers are sent to PostHog with a random browser identifier stored for up to 90 days. This allows us to measure return visits. No names, email, full URLs or recordings are sent by the game. PostHog receives network information such as your IP address when processing requests. Declining does not affect play. Stopping analytics deletes the local identifier and prevents future uploads; it does not erase events already received.</p><p><strong>Research disclosure:</strong> Saying you might buy a cosmetic option is a survey answer, not a purchase, deposit or promise.</p><button type="button" class="primary" id="got-it">Got it</button></div></dialog>
   <script src="./analytics-config.js"></script>
   <script src="./analytics.js"></script>
   <script>
@@ -290,14 +298,17 @@
   $('survey-no').addEventListener('click',()=>survey('no'));
   function renderSurvey(){if(stats.survey){$('survey-buttons').classList.add('hidden');$('survey-result').textContent='You answered this survey. Answers are sent only when optional analytics is allowed. This is not a purchase.';}else{$('survey-buttons').classList.remove('hidden');$('survey-result').textContent='';}}
   $('export-metrics').addEventListener('click',()=>{
-    const blob=new Blob([JSON.stringify({explanation:'Aggregated activity on this browser only. Not user analytics or a revenue measure.',data:stats},null,2)],{type:'application/json'});
+    const blob=new Blob([JSON.stringify({explanation:'Aggregated activity on this browser only. Not user analytics or a revenue measure.',data:stats,journey:(()=>{try{return JSON.parse(storage.getItem('looplab_journey_v1')||'null');}catch{return null;}})()},null,2)],{type:'application/json'});
     const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='looplab-local-activity.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500);
   });
-  $('delete-metrics').addEventListener('click',()=>{if(!confirm('Delete all LoopLab scores and local activity on this device?'))return;try{localStorage.removeItem(STAT_KEY);}catch{};location.reload();});
+  $('delete-metrics').addEventListener('click',()=>{if(!confirm('Delete all LoopLab scores, journey progress and local activity on this device?'))return;try{localStorage.removeItem(STAT_KEY);localStorage.removeItem('looplab_journey_v1');}catch{};location.reload();});
+  window.loopLabTrack=track;window.loopLabStopQuick=()=>reset(mode);
   reset(mode);renderSurvey();
   window.__loopLabQA=Object.freeze({getState:()=>({mode,score,remaining,runState,level,seed}),begin,nextRound,finish,makeLink,stats:()=>safeRead()});
 })();
 
 </script>
+<script src="./journey.js"></script>
+<script src="./journey-ui.js"></script>
 </body>
 </html>

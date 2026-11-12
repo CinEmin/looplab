@@ -24,7 +24,7 @@ jobs:
           python3 - <<'PY'
           from zipfile import ZipFile
           with ZipFile('build/looplab-itch.zip') as z:
-              assert sorted(z.namelist()) == ['analytics-config.js', 'analytics.js', 'index.html']
+              assert sorted(z.namelist()) == ['analytics-config.js', 'analytics.js', 'index.html', 'journey-ui.js', 'journey.css', 'journey.js']
               assert "window.LOOPLAB_ANALYTICS.channel='itch'" in z.read('analytics-config.js').decode()
               assert 'https://looplab-pilot.racing-thyme-8277.chatgpt.site/' in z.read('index.html').decode()
           PY

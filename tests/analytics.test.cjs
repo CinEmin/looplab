@@ -13,3 +13,4 @@ test('channel attribution uses only recognized distribution labels',()=>{
   a.consent(true);a.track('visit');assert.equal(sent[0].body.properties.channel,want);
  }
 });
+test('journey events require consent and allow only bounded level metadata',()=>{const {a,sent}=setup();a.track('journey_start',{level:1});assert.equal(sent.length,0);a.consent(true);for(const event of ['journey_start','journey_complete','journey_retry','journey_hint','journey_abandon']){assert.equal(a.track(event,{mode:'memory',run_type:'journey',level:15,pattern:[1,2]}),true);const p=sent.at(-1).body.properties;assert.equal(p.level,15);assert.equal(p.run_type,'journey');assert.equal(p.pattern,undefined);}a.track('journey_start',{level:999});assert.equal(sent.at(-1).body.properties.level,undefined);});

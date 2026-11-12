@@ -36,3 +36,7 @@ The pilot is still being tested. Which game makes you want another round?
 ## Experiment
 
 First validate listing availability and browser play, then observe genuine opt-in starts, completions and return visits. Do not count staff QA or the owner's test as acquisition. Record traffic attribution before comparing channels. No spending decision from event totals alone. Review after 100 genuine consenting browsers or 14 days; an empty sample triggers a distribution review, not fabricated conversion claims.
+
+## Memory Journey update
+
+New distribution bundles must include index.html, analytics-config.js, analytics.js, journey.js, journey-ui.js, journey.css. Default play is now 15 untimed levels; quick challenges remain accessible via the 60-second games switch or existing challenge URLs. Do not describe the new main mode as a one-minute game. No purchase or payment feature added.

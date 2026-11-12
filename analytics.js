@@ -2,7 +2,7 @@
 (function(root,factory){if(typeof module==='object')module.exports=factory;else root.makeLoopLabAnalytics=factory;})(typeof window==='undefined'?{}:window,function(config,env){
  'use strict';
  const consentKey='looplab_analytics_consent',idKey='looplab_analytics_id';
- const events=new Set(['visit','game_start','game_complete','game_abandon','share_success','theme_interest']);
+ const events=new Set(['visit','game_start','game_complete','game_abandon','share_success','theme_interest','journey_start','journey_complete','journey_retry','journey_hint','journey_abandon']);
  const ready=Boolean(config.token)&&['https://eu.i.posthog.com','https://us.i.posthog.com'].includes(config.host);
  let choice=null,identity=null,count=0;
  try{choice=env.storage.getItem(consentKey);identity=JSON.parse(env.storage.getItem(idKey)||'null');}catch{}
@@ -13,9 +13,10 @@
   try{
    const now=env.now();
    if(!identity||typeof identity.id!=='string'||!Number.isFinite(identity.created)||now-identity.created>90*86400000){identity={id:env.uuid(),created:now};env.storage.setItem(idKey,JSON.stringify(identity));}
-   const properties={$process_person_profile:false,$geoip_disable:true,release:'pilot-01.3',channel:config.channel==='itch'?'itch':'site'};
+   const properties={$process_person_profile:false,$geoip_disable:true,release:'journey-01.0',channel:config.channel==='itch'?'itch':'site'};
    if(['odd','numbers','memory'].includes(props.mode))properties.mode=props.mode;
-   if(['daily','practice','shared'].includes(props.run_type))properties.run_type=props.run_type;
+   if(['daily','practice','shared','journey'].includes(props.run_type))properties.run_type=props.run_type;
+   if(Number.isInteger(props.level)&&props.level>=1&&props.level<=15)properties.level=props.level;
    if(['maybe','no'].includes(props.choice))properties.choice=props.choice;
    if(typeof props.replay==='boolean')properties.replay=props.replay;
    if(typeof props.shared_entry==='boolean')properties.shared_entry=props.shared_entry;
