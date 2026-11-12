@@ -1,0 +1,30 @@
+name: LoopLab checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Regression tests
+        run: npm test
+      - name: Validate itch HTML5 package
+        run: |
+          python3 scripts/build-itch.py
+          python3 - <<'PY'
+          from zipfile import ZipFile
+          with ZipFile('build/looplab-itch.zip') as z:
+              assert sorted(z.namelist()) == ['analytics-config.js', 'analytics.js', 'index.html']
+              assert "window.LOOPLAB_ANALYTICS.channel='itch'" in z.read('analytics-config.js').decode()
+              assert 'https://looplab-pilot.racing-thyme-8277.chatgpt.site/' in z.read('index.html').decode()
+          PY
