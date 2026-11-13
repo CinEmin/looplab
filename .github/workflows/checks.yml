@@ -18,6 +18,8 @@ jobs:
           node-version: '22'
       - name: Regression tests
         run: npm test
+      - name: Packaging regression tests
+        run: python3 -m unittest discover -s tests -p test_build_itch.py -v
       - name: Validate itch HTML5 package
         run: |
           python3 scripts/build-itch.py

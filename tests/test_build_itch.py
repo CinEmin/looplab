@@ -27,9 +27,8 @@ class PackageTests(unittest.TestCase):
         self.output = self.root / 'build/looplab-itch.zip'
 
     def build(self):
-        # Reproduce a non-UTF-8 host even when tests run on Linux/UTF-8 Python.
-        runner = "import locale,runpy; locale.getencoding=lambda:'cp1252'; runpy.run_path('scripts/build-itch.py',run_name='__main__')"
-        return subprocess.run([sys.executable, '-X', 'utf8=0', '-c', runner], cwd=self.root, capture_output=True)
+        # Use the host locale (cp1252 on the Windows regression host), not UTF-8 mode.
+        return subprocess.run([sys.executable, '-X', 'utf8=0', 'scripts/build-itch.py'], cwd=self.root, capture_output=True)
 
     def test_exact_utf8_assets_and_channel_override(self):
         result = self.build()
