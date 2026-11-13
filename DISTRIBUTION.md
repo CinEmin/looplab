@@ -14,7 +14,7 @@ Use a free account and HTML project. Owner must complete account authentication 
 
 Build: `python scripts/build-itch.py` produces `build/looplab-itch.zip`. Canonical sharing and iframe viewport QA verified; actual itch-hosted scoring, canonical share fallback and telemetry were verified.
 
-## Listing text
+## Historical listing text (superseded by Memory Journey)
 
 Title: LoopLab — Three One-Minute Challenges
 
@@ -40,3 +40,12 @@ First validate listing availability and browser play, then observe genuine opt-i
 ## Memory Journey update
 
 New distribution bundles must include index.html, analytics-config.js, analytics.js, journey.js, journey-ui.js, journey.css. Default play is now 15 untimed levels; quick challenges remain accessible via the 60-second games switch or existing challenge URLs. Do not describe the new main mode as a one-minute game. No purchase or payment feature added.
+
+
+## Distribution audit — 14 November 2026 (Europe/Istanbul)
+
+The public listing is already titled **LoopLab — Memory Journey & Quick Games**, with the 15-level description and standalone phone link. Searching itch.io for `LoopLab` in a signed-out browser showed this project in the results (first at observation time); this establishes indexing, not visits or stable ranking. The short description describes 15 untimed levels. The earlier one-minute listing text above is historical and must not replace the current listing.
+
+The browser session was signed out; no listing, payment setting or devlog was changed. Current tags observed: Casual, High Score, minigames. No customer or revenue data was inferred. Official references: https://itch.io/docs/creators/getting-indexed and https://itch.io/docs/creators/html5 . Browser HTML games support donations; paid access requires downloadable classification. Payment onboarding remains a separate gate.
+
+The Windows packaging failure was reproduced and fixed: binary asset reads avoid locale decoding, deterministic ZIP metadata supports hash comparison, and atomic replacement preserves the last archive when an input is missing. Three Python regression tests and 39 Node tests pass. This is a build-tool change, not a new game deployment.
