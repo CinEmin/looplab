@@ -4,6 +4,10 @@
 
 [Play Memory Journey in your browser](https://looplab-pilot.racing-thyme-8277.chatgpt.site/) · [Play on itch.io](https://cinemin.itch.io/looplab)
 
+[![Memory Journey level 1 showing two highlighted tiles, free retries and no time limit](docs/images/memory-journey.png)](https://looplab-pilot.racing-thyme-8277.chatgpt.site/)
+
+Actual game screen during pattern reveal. Tile positions vary between runs.
+
 No account needed. Scores stay on your device. Optional analytics requires explicit consent and can be stopped at any time.
 
 ## Try one level
