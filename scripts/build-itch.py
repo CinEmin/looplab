@@ -9,7 +9,7 @@ with NamedTemporaryFile(dir=out.parent, prefix='.looplab-', suffix='.zip', delet
     staging = Path(temp.name)
 try:
     with ZipFile(staging, "w") as bundle:
-        for name in ("index.html", "analytics.js", "analytics-config.js", "journey.js", "journey-ui.js", "journey.css"):
+        for name in ("index.html", "analytics.js", "analytics-config.js", "journey.js", "journey-ui.js", "journey.css", "active-clock.js", "compact-play.css"):
             content = (root / name).read_bytes()
             if name == "analytics-config.js":
                 content += b"\nwindow.LOOPLAB_ANALYTICS.channel='itch';\n"

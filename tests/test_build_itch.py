@@ -10,7 +10,7 @@ import unittest
 from zipfile import ZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
-FILES = ('index.html', 'analytics.js', 'analytics-config.js', 'journey.js', 'journey-ui.js', 'journey.css')
+FILES = ('index.html', 'analytics.js', 'analytics-config.js', 'journey.js', 'journey-ui.js', 'journey.css', 'active-clock.js', 'compact-play.css')
 OVERRIDE = b"\nwindow.LOOPLAB_ANALYTICS.channel='itch';\n"
 
 

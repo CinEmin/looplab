@@ -1,0 +1,41 @@
+/* Keep gameplay visible in short browser frames; privacy and consent remain accessible. */
+@media (min-width:600px) and (max-height:800px){
+ body:has(#journey-play:not(.hidden)) .hero{display:none}
+ body:has(#journey-play:not(.hidden)) .layout{padding:10px 16px}
+ body:has(#journey-play:not(.hidden)) .topbar{margin:0;padding:0;min-height:40px}
+ .experience-switch{margin:8px 0}
+ .experience-switch button{padding:8px 16px;min-height:40px}
+ .journey-panel{padding:14px 18px}
+ #journey-play:not(.hidden){display:grid;grid-template-columns:minmax(0,1fr) 240px;column-gap:18px;align-items:center}
+ #journey-play>.journey-top,#journey-rule,#journey-play>.journey-stats,#journey-status,#journey-play>.journey-actions{grid-column:1}
+ #journey-board{grid-column:2;grid-row:1/6;width:240px;max-width:240px;margin:0;gap:6px}
+ .journey-panel h2{font-size:24px;margin:4px 0}
+ .journey-top .micro-label{margin:0}
+ #journey-rule{margin:5px 0;line-height:1.4}
+ .journey-stats{margin:6px 0;gap:6px}
+ .journey-stats span{padding:6px 8px}
+ #journey-status{min-height:36px;margin:6px 0;line-height:1.4}
+ .journey-actions button{min-height:44px;padding:10px 14px}
+}
+html{scroll-behavior:auto}
+
+@media(min-width:600px) and (max-height:800px){
+body:has(#quick-games:not(.hidden)) .hero{display:none}
+body:has(#quick-games:not(.hidden)) .layout{padding:8px 14px}
+body:has(#quick-games:not(.hidden)) .topbar,body:has(#quick-games:not(.hidden)) .experience-switch,body:has(#quick-games:not(.hidden)) .tabs{margin:6px 0}
+body:has(#quick-games:not(.hidden)) .game-panel{display:grid;grid-template-columns:minmax(0,1fr) 270px;column-gap:16px;padding:12px}
+body:has(#quick-games:not(.hidden)) .panel-head,body:has(#quick-games:not(.hidden)) .statbar,body:has(#quick-games:not(.hidden)) .progress,body:has(#quick-games:not(.hidden)) .panel-foot{grid-column:1}
+body:has(#quick-games:not(.hidden)) .stage{grid-column:2;grid-row:1/6;min-height:0;padding:0;width:270px}
+body:has(#quick-games:not(.hidden)) .game-board{width:270px;max-width:270px}
+body:has(#quick-games:not(.hidden)) .statbar{gap:4px;margin:8px 0}
+body:has(#quick-games:not(.hidden)) .statbar>div{padding:6px 4px}
+body:has(#quick-games:not(.hidden)) .panel-head{display:block}
+body:has(#quick-games:not(.hidden)) .panel-head h2{font-size:22px}
+body:has(#quick-games:not(.hidden)) .pill{display:inline-block;margin-top:6px}
+body:has(#quick-games:not(.hidden)) .panel-foot{padding-top:6px}
+body:has(#quick-games:not(.hidden)) #share-result{margin:0}
+}
+
+@media(max-width:599px) and (max-height:850px){body:has(#journey-play:not(.hidden)) .hero{display:none}#journey-board{width:280px;max-width:100%;gap:6px}.journey-panel{padding:14px}.journey-panel h2{font-size:24px}.journey-rule{margin:6px 0}.journey-stats{margin:8px 0}.journey-status{margin:8px 0}}
+
+body:has(#journey-play:not(.hidden)){overflow-anchor:none}@media(max-width:399px) and (max-height:700px){#journey-board{width:220px}}

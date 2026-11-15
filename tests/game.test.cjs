@@ -2,7 +2,7 @@ const {test}=require('node:test');const assert=require('node:assert/strict');con
 function boot(saved='{}',search='',faults={}){
 const events=[];const nodes=new Map();function node(){const classes=new Set();const handlers={};return {handlers,textContent:'',innerHTML:'',style:{},dataset:{},children:[],firstElementChild:{style:{}},classList:{toggle(){},add(x){classes.add(x)},contains(x){return classes.has(x)},remove(x){classes.delete(x)}},setAttribute(){},addEventListener(type,fn){handlers[type]=fn},appendChild(n){this.children.push(n)},querySelectorAll(){return []}}}
 const tabs=['odd','numbers','memory'].map(game=>{const n=node();n.dataset.game=game;return n});
-const doc={getElementById(id){if(!nodes.has(id))nodes.set(id,node());return nodes.get(id)},querySelectorAll(){return tabs},createElement:node};let interval;let timeout;let time=0;
+const docHandlers={};const doc={hidden:false,addEventListener(type,fn){docHandlers[type]=fn},getElementById(id){if(!nodes.has(id))nodes.set(id,node());return nodes.get(id)},querySelectorAll(){return tabs},createElement:node};let interval;let timeout;let time=0;
 const ctx={document:doc,localStorage:{getItem:()=>saved,setItem:(k,v)=>{saved=v}},location:{href:'https://example.com/'+search,search,protocol:'http:'},URL,URLSearchParams,Date,Math,performance:{now:()=>time},navigator:{},history:{replaceState(){}},setInterval:fn=>{interval=fn;return 1},clearInterval(){},setTimeout:fn=>{timeout=fn;return 1},clearTimeout(){},window:{makeLoopLabAnalytics:()=>({ready:false,choice:()=>null,track:(name,props)=>events.push({name,props})})}};
 if(faults.mobile!==undefined){ctx.window.matchMedia=()=>({matches:faults.mobile});doc.getElementById('game-panel').scrollIntoView=options=>events.push({name:'scroll_to_game',options});}
 if(faults.storageDenied)Object.defineProperty(ctx,'localStorage',{get(){throw new Error('SecurityError')}});
@@ -14,7 +14,7 @@ if(faults.networkRejected){
  ctx.localStorage={getItem:k=>k==='looplab_analytics_consent'?'yes':null,setItem(){},removeItem(){}};
  ctx.fetch=()=>{events.push({name:'network_attempt'});return Promise.reject(new Error('Offline'))};
 }
-vm.createContext(ctx);vm.runInContext(fs.readFileSync('index.html','utf8').match(/<script>([\s\S]*?)<\/script>/)[1],ctx);return {events,tabs,advance(ms){time+=ms},reveal(){timeout()},api:ctx.window.__loopLabQA,tick(ms){time+=ms;interval()},nodes};}
+vm.createContext(ctx);if(fs.existsSync('active-clock.js')){vm.runInContext(fs.readFileSync('active-clock.js','utf8'),ctx);ctx.createActiveClock=ctx.window.createActiveClock;}vm.runInContext(fs.readFileSync('index.html','utf8').match(/<script>([\s\S]*?)<\/script>/)[1],ctx);return {events,tabs,hide(hidden){doc.hidden=hidden;if(docHandlers.visibilitychange)docHandlers.visibilitychange()},advance(ms){time+=ms},reveal(){timeout()},api:ctx.window.__loopLabQA,tick(ms){time+=ms;interval()},nodes};}
 test('incomplete persisted stats do not stop startup',()=>{assert.doesNotThrow(()=>boot('{"version":1}'))});
 test('mobile starts bring the game into view without changing the seed',()=>{
  const b=boot('{}','?g=numbers&seed=0',{mobile:true});b.api.begin();
@@ -76,4 +76,15 @@ for(const [label,saved,faults] of [
   if(faults.networkRejected)assert.ok(b.events.filter(e=>e.name==='network_attempt').length>=3);
  }
  await new Promise(resolve=>setImmediate(resolve));
+});
+
+for(const mode of ['odd','numbers','memory']) test(mode+': hidden time is excluded and hidden inputs cannot score',()=>{
+ const b=boot('{}','?g='+mode);b.api.begin();if(mode==='memory')b.reveal();
+ const tiles=b.nodes.get('game-board').children;
+ const tile=mode==='numbers'?tiles.find(t=>t.textContent==='1'):mode==='memory'?tiles.find(t=>t.className.includes('show')):tiles.find(t=>tiles.filter(x=>x.style.cssText===t.style.cssText).length===1);
+ b.tick(500);const before=b.api.getState().remaining;b.hide(true);b.tick(90000);
+ assert.equal(b.api.getState().remaining,before);assert.equal(b.api.getState().runState,'active');
+ tile.handlers.click({currentTarget:tile});assert.equal(b.api.getState().score,0);
+ b.hide(false);b.tick(1000);assert.equal(b.api.getState().remaining,before-1);
+ tile.handlers.click({currentTarget:tile});assert.ok(b.api.getState().score>0);
 });
