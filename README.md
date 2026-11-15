@@ -18,7 +18,7 @@ Open the game, choose level 1 and study the pattern. Recall it at your own pace;
 
 [RecallKit](https://github.com/CinEmin/recallkit) is a separate free, offline authoring prototype for independent creators. Pick a grid and recall rule, choose the tiles, then export a standalone playable HTML file. It is not a LoopLab level importer and does not transfer LoopLab progress.
 
-[Download RecallKit](https://github.com/CinEmin/recallkit/releases/tag/v0.1.1-mit), choose `recallkit-editor.html` and open the downloaded file in your browser. The source ZIP is also available. Try making two levels, saving JSON and opening your exported HTML. Optional [public playtest feedback](https://github.com/CinEmin/recallkit/issues/new?template=playtest.yml) helps evaluate this workflow; do not include personal or private information. No payment, account in the editor, or promised future features.
+[Open the RecallKit editor](https://cinemin.github.io/recallkit/) to start in your browser without installing anything. The app is hosted by GitHub Pages; it does not upload your activity or include analytics. Save JSON and check your downloaded file before closing or reloading. For offline use, [download RecallKit](https://github.com/CinEmin/recallkit/releases/tag/v0.1.1-mit), choose `recallkit-editor.html` and open the downloaded file. The source ZIP is also available. Try making two levels, saving JSON and opening your exported HTML. Optional [public playtest feedback](https://github.com/CinEmin/recallkit/issues/new?template=playtest.yml) helps evaluate this workflow; do not include personal or private information. No payment, account in the editor, or promised future features.
 
 ## Development
 
